@@ -1,0 +1,21 @@
+{
+  "frames": [
+    {
+      "filename": "player_idle1",
+      "frame": { "x": 72, "y": 60, "w": 48, "h": 56 },
+      "rotated": false,
+      "trimmed": false
+    },
+    {
+      "filename": "player_run1",
+      "frame": { "x": 72, "y": 238, "w": 48, "h": 56 },
+      "rotated": false,
+      "trimmed": false
+    }
+  ],
+  "meta": {
+    "image": "spritesheet.png",
+    "size": { "w": 1980, "h": 361 },
+    "scale": 1
+  }
+}
