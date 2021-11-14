@@ -2,7 +2,7 @@
   "name": "gamevember",
   "version": "1.1.1",
   "description": "A platformer game built with Phaser 3",
-  "main": "src/index.js",
+  "main": "src/game.js",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
     "start": "webpack-dev-server --config webpack/base.js --open"
@@ -29,7 +29,7 @@
     "terser-webpack-plugin": "^2.2.1",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.9.0",
+    "webpack-dev-server": "^3.11.3",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
