@@ -1,14 +1,8 @@
 // JavaScript source code:  GameVember 'Bug'
+
+// NOT IN USE
 import Phaser from "phaser";
 import Scene1 from "./assets/Scene1.js"
-import BugL1 from "./assets/bug1-left.png";
-import BugL2 from "./assets/bug2-left.png";
-import BugR1 from "./assets/bug1-right.png";
-import BugR2 from "./assets/bug2-right.png";
-import BugD1 from "./assets/bug1-down.png";
-import BugD2 from "./assets/bug2-down.png";
-import BugU1 from "./assets/bug1-up.png";
-import BugU2 from "./assets/bug2-up.png";
 
 
 
