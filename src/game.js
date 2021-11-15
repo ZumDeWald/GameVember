@@ -1,14 +1,17 @@
+// JavaScript source code:  GameVember 'Bug'
+
+// NOT IN USE
 import Phaser from "phaser";
-import Scene1 from "./Scene1.js";
+import Scene1 from "./assets/Scene1.js"
 
 
 
 // CONFIG:  Define the base canvas layout
-var config = {
+var CONFIG = {
     type: Phaser.AUTO,
-    parent: "#bugcanvas",
-    height: '100%',
-    width: '100%',
+    height: '100vh',
+    width: '100vw',
+    backgroundColor: 0x000000,
     scene: [Scene1],
     physics: {
         default: "arcade",
@@ -17,6 +20,7 @@ var config = {
             debug: false,
         },
     },
-    sprite_state: 'L1',
+    sprite_state = 'L1',
 }
-var game = new Phaser.Game(config)
+
+var GAME = new Phaser.Game(CONFIG)

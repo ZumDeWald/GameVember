@@ -1,0 +1,16 @@
+﻿body
+{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    background: black;
+    color: white;
+}
+
+h1 {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
