@@ -1,0 +1,109 @@
+{
+  "frames": [
+    {
+      "filename": "atk1",
+      "frame": { "x": 124, "y": 37, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk2",
+      "frame": { "x": 0, "y": 74, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk3",
+      "frame": { "x": 0, "y": 148, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk4",
+      "frame": { "x": 48, "y": 148, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk5",
+      "frame": { "x": 124, "y": 111, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk6",
+      "frame": { "x": 124, "y": 74, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk7",
+      "frame": { "x": 0, "y": 0, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk8",
+      "frame": { "x": 0, "y": 37, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk9",
+      "frame": { "x": 48, "y": 111, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk10",
+      "frame": { "x": 124, "y": 0, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "atk11",
+      "frame": { "x": 0, "y": 111, "w": 47, "h": 36 }
+    },
+    {
+      "filename": "idle1",
+      "frame": { "x": 48, "y": 0, "w": 19, "h": 30 }
+    },
+    {
+      "filename": "idle2",
+      "frame": { "x": 48, "y": 31, "w": 19, "h": 30 }
+    },
+    {
+      "filename": "run1",
+      "frame": { "x": 68, "y": 25, "w": 24, "h": 28 }
+    },
+    {
+      "filename": "run2",
+      "frame": { "x": 96, "y": 148, "w": 24, "h": 28 }
+    },
+    {
+      "filename": "run3",
+      "frame": { "x": 96, "y": 54, "w": 24, "h": 28 }
+    },
+    {
+      "filename": "run4",
+      "frame": { "x": 146, "y": 148, "w": 24, "h": 28 }
+    },
+    {
+      "filename": "run5",
+      "frame": { "x": 121, "y": 148, "w": 24, "h": 28 }
+    },
+    {
+      "filename": "run6",
+      "frame": { "x": 96, "y": 25, "w": 24, "h": 28 }
+    },
+    {
+      "filename": "slide1",
+      "frame": { "x": 48, "y": 74, "w": 34, "h": 15 }
+    },
+    {
+      "filename": "slide2",
+      "frame": { "x": 48, "y": 90, "w": 34, "h": 15 }
+    },
+    {
+      "filename": "smrslt1",
+      "frame": { "x": 68, "y": 0, "w": 27, "h": 24 }
+    },
+    {
+      "filename": "smrslt2",
+      "frame": { "x": 96, "y": 0, "w": 27, "h": 24 }
+    },
+    {
+      "filename": "smrslt3",
+      "frame": { "x": 96, "y": 83, "w": 27, "h": 24 }
+    },
+    {
+      "filename": "smrslt4",
+      "frame": { "x": 96, "y": 111, "w": 27, "h": 24 }
+    }
+  ],
+  "meta": {
+    "image": "player.png",
+    "size": { "w": 171, "h": 184 },
+    "scale": 1
+  }
+}
