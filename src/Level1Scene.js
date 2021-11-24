@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import Level1 from "./assets/Level1.json";
 import GameVemberTiles from "./assets/LevelBlocks.png";
-import Spares from "./assets/spaceTiles.png";
 import Player from "./assets/player.png";
 import PlayerAtlas from "./assets/player.json";
 
@@ -13,7 +12,6 @@ class Level1Scene extends Phaser.Scene {
   preload() {
     this.load.tilemapTiledJSON("level1Map", Level1);
     this.load.image("GameVemberTiles", GameVemberTiles);
-    this.load.image("Spares", Spares);
     this.load.atlas("player", Player, PlayerAtlas);
   }
 
@@ -24,8 +22,6 @@ class Level1Scene extends Phaser.Scene {
     // Map
     const level1Map = this.make.tilemap({ key: "level1Map" });
     const GameVemberTiles = level1Map.addTilesetImage("GameVemberTiles");
-    const Spares = level1Map.addTilesetImage("Spares");
-    level1Map.createLayer("background", Spares, 0, 0);
     level1Map.createLayer("background2", GameVemberTiles, 0, 0).setDepth(1);
     this.physics.world.setBounds(0, 0, 4800, 4800);
 
@@ -50,6 +46,7 @@ class Level1Scene extends Phaser.Scene {
       key: "player_idle",
       frames: this.anims.generateFrameNames("player", {
         prefix: "idle",
+        start: 1,
         end: 2,
       }),
       frameRate: 4,
@@ -60,6 +57,7 @@ class Level1Scene extends Phaser.Scene {
       key: "player_run",
       frames: this.anims.generateFrameNames("player", {
         prefix: "run",
+        start: 1,
         end: 6,
       }),
       frameRate: 8,
@@ -70,6 +68,7 @@ class Level1Scene extends Phaser.Scene {
       key: "player_jump",
       frames: this.anims.generateFrameNames("player", {
         prefix: "smrslt",
+        start: 1,
         end: 4,
       }),
       frameRate: 8,

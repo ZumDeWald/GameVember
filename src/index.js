@@ -7,6 +7,7 @@ const config = {
   parent: "phaser-example",
   width: 800,
   height: 600,
+  backgroundColor: "#222324",
   scene: [StartScene, Level1Scene],
   physics: {
     default: "arcade",
