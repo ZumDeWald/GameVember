@@ -1,0 +1,35 @@
+{
+  "frames": [
+    {
+      "filename": "potion_purple",
+      "frame": { "x": 0, "y": 12, "w": 12, "h": 12 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 12 },
+      "sourceSize": { "w": 12, "h": 12 }
+    },
+    {
+      "filename": "potion_red",
+      "frame": { "x": 0, "y": 0, "w": 9, "h": 11 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 9, "h": 11 },
+      "sourceSize": { "w": 9, "h": 11 }
+    },
+    {
+      "filename": "potion_white",
+      "frame": { "x": 10, "y": 0, "w": 10, "h": 11 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 10, "h": 11 },
+      "sourceSize": { "w": 10, "h": 11 }
+    }
+  ],
+  "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "potions.png",
+    "size": { "w": 20, "h": 24 },
+    "scale": 1
+  }
+}
