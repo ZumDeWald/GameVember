@@ -47,11 +47,22 @@ export default class Player extends CharacterBase {
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
+
+    if (this.stance === PlayerStance.ATTACK) {
+      this.setOffset(14, 5);
+    } else {
+      this.setOffset(0);
+    }
+
     if (this.deltaCounter > 0) {
       this.deltaCounter += dt;
-      if (this.deltaCounter >= 650) {
+      if (this.deltaCounter >= 200) {
         this.deltaCounter = 0;
-        this.stance = PlayerStance.STAND;
+        if (this.getBody().onFloor()) {
+          this.stance = PlayerStance.STAND;
+        } else {
+          this.stance = PlayerStance.JUMP;
+        }
       }
     }
   }
@@ -67,11 +78,8 @@ export default class Player extends CharacterBase {
 
     if (this.stance === PlayerStance.ATTACK) {
       this.hpValue.setPosition(this.x, this.y - this.height * 0.4);
-      this.setOffset(12, 8);
-      this.getBody().setVelocityX(0);
+      if (this.getBody().onFloor()) this.getBody().setVelocityX(0);
       return;
-    } else {
-      this.setOffset(0);
     }
 
     this.getBody().setVelocityX(0);

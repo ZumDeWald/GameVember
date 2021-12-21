@@ -36,10 +36,10 @@ export const createPlayerAnims = (animationManager) => {
     key: "player_atk",
     frames: animationManager.generateFrameNames("player", {
       prefix: "atk",
-      start: 1,
+      start: 8,
       end: 11,
     }),
-    frameRate: 16,
+    frameRate: 12,
     repeat: 0,
   });
 };
