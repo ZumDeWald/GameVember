@@ -1,109 +1,331 @@
 {
   "frames": [
     {
-      "filename": "atk1",
-      "frame": { "x": 124, "y": 37, "w": 47, "h": 36 }
+      "filename": "player_air_atk_0",
+      "frame": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk2",
-      "frame": { "x": 0, "y": 74, "w": 47, "h": 36 }
+      "filename": "player_air_atk_1",
+      "frame": { "x": 0, "y": 38, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk3",
-      "frame": { "x": 0, "y": 148, "w": 47, "h": 36 }
+      "filename": "player_air_atk_2",
+      "frame": { "x": 51, "y": 0, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk4",
-      "frame": { "x": 48, "y": 148, "w": 47, "h": 36 }
+      "filename": "player_air_atk_3",
+      "frame": { "x": 51, "y": 38, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk5",
-      "frame": { "x": 124, "y": 111, "w": 47, "h": 36 }
+      "filename": "player_cast_0",
+      "frame": { "x": 0, "y": 76, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk6",
-      "frame": { "x": 124, "y": 74, "w": 47, "h": 36 }
+      "filename": "player_cast_1",
+      "frame": { "x": 51, "y": 76, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk7",
-      "frame": { "x": 0, "y": 0, "w": 47, "h": 36 }
+      "filename": "player_cast_2",
+      "frame": { "x": 0, "y": 114, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk8",
-      "frame": { "x": 0, "y": 37, "w": 47, "h": 36 }
+      "filename": "player_cast_3",
+      "frame": { "x": 51, "y": 114, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk9",
-      "frame": { "x": 48, "y": 111, "w": 47, "h": 36 }
+      "filename": "player_cast_loop_0",
+      "frame": { "x": 102, "y": 0, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk10",
-      "frame": { "x": 124, "y": 0, "w": 47, "h": 36 }
+      "filename": "player_cast_loop_2",
+      "frame": { "x": 102, "y": 38, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "atk11",
-      "frame": { "x": 0, "y": 111, "w": 47, "h": 36 }
+      "filename": "player_cast_loop_1",
+      "frame": { "x": 102, "y": 76, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "idle1",
-      "frame": { "x": 48, "y": 0, "w": 19, "h": 30 }
+      "filename": "player_cast_loop_3",
+      "frame": { "x": 102, "y": 114, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "idle2",
-      "frame": { "x": 48, "y": 31, "w": 19, "h": 30 }
+      "filename": "player_die_0",
+      "frame": { "x": 0, "y": 152, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "run1",
-      "frame": { "x": 68, "y": 25, "w": 24, "h": 28 }
+      "filename": "player_die_3",
+      "frame": { "x": 51, "y": 152, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "run2",
-      "frame": { "x": 96, "y": 148, "w": 24, "h": 28 }
+      "filename": "player_die_1",
+      "frame": { "x": 102, "y": 152, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "run3",
-      "frame": { "x": 96, "y": 54, "w": 24, "h": 28 }
+      "filename": "player_die_2",
+      "frame": { "x": 153, "y": 0, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "run4",
-      "frame": { "x": 146, "y": 148, "w": 24, "h": 28 }
+      "filename": "player_fall_0",
+      "frame": { "x": 153, "y": 38, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "run5",
-      "frame": { "x": 121, "y": 148, "w": 24, "h": 28 }
+      "filename": "player_fall_1",
+      "frame": { "x": 153, "y": 76, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "run6",
-      "frame": { "x": 96, "y": 25, "w": 24, "h": 28 }
+      "filename": "player_idle_0",
+      "frame": { "x": 153, "y": 114, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "slide1",
-      "frame": { "x": 48, "y": 74, "w": 34, "h": 15 }
+      "filename": "player_idle_1",
+      "frame": { "x": 153, "y": 152, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "slide2",
-      "frame": { "x": 48, "y": 90, "w": 34, "h": 15 }
+      "filename": "player_idle_2",
+      "frame": { "x": 0, "y": 190, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "smrslt1",
-      "frame": { "x": 68, "y": 0, "w": 27, "h": 24 }
+      "filename": "player_idle_3",
+      "frame": { "x": 51, "y": 190, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "smrslt2",
-      "frame": { "x": 96, "y": 0, "w": 27, "h": 24 }
+      "filename": "player_run_0",
+      "frame": { "x": 102, "y": 190, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "smrslt3",
-      "frame": { "x": 96, "y": 83, "w": 27, "h": 24 }
+      "filename": "player_run_1",
+      "frame": { "x": 153, "y": 190, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     },
     {
-      "filename": "smrslt4",
-      "frame": { "x": 96, "y": 111, "w": 27, "h": 24 }
+      "filename": "player_run_2",
+      "frame": { "x": 204, "y": 0, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_run_3",
+      "frame": { "x": 204, "y": 38, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_run_4",
+      "frame": { "x": 204, "y": 76, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_run_5",
+      "frame": { "x": 204, "y": 114, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_slide_0",
+      "frame": { "x": 204, "y": 152, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_slide_1",
+      "frame": { "x": 204, "y": 190, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_smrslt_0",
+      "frame": { "x": 0, "y": 228, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_smrslt_1",
+      "frame": { "x": 51, "y": 228, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_smrslt_2",
+      "frame": { "x": 102, "y": 228, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_smrslt_3",
+      "frame": { "x": 153, "y": 228, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_wall_slide_0",
+      "frame": { "x": 204, "y": 228, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_wall_slide_1",
+      "frame": { "x": 0, "y": 266, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_atk_0",
+      "frame": { "x": 51, "y": 266, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_atk_1",
+      "frame": { "x": 102, "y": 266, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_atk_2",
+      "frame": { "x": 153, "y": 266, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
+    },
+    {
+      "filename": "player_atk_3",
+      "frame": { "x": 204, "y": 266, "w": 50, "h": 37 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 50, "h": 37 },
+      "sourceSize": { "w": 50, "h": 37 }
     }
   ],
   "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
     "image": "player.png",
-    "size": { "w": 171, "h": 184 },
+    "size": { "w": 254, "h": 303 },
     "scale": 1
   }
 }

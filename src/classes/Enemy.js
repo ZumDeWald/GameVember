@@ -1,6 +1,8 @@
 import { Math } from "phaser";
 import { EventsName } from "../constants";
+import { sceneEvents } from "../events/EventsCenter";
 import { CharacterBase } from "./CharacterBase";
+import Drops from "./Drops";
 
 class Enemy extends CharacterBase {
   constructor(scene, x, y, texture, target, frame) {
@@ -9,28 +11,35 @@ class Enemy extends CharacterBase {
     this.AGGRESSOR_RADIUS = 100;
 
     this.handleAttack = () => {
+      const enemyLeft = this.x - this.target.x < 0 ? true : false;
+
       if (
-        Math.Distance.BetweenPoints(
-          { x: this.x, y: this.y },
-          { x: this.target.x, y: this.target.y }
-        ) < this.target.width
+        (enemyLeft && !this.target.flipX) ||
+        (!enemyLeft && this.target.flipX)
       ) {
-        this.getDamage();
+        return;
+      }
+
+      const diff = Math.Distance.BetweenPoints(
+        { x: this.x, y: this.y },
+        { x: this.target.x, y: this.target.y }
+      );
+
+      if (diff < 35) {
         this.disableBody();
-        this.scene.game.events.emit(EventsName.DEFEAT_BAT);
-        this.scene.time.delayedCall(300, () => {
+        this.play("bat_explode", true);
+        sceneEvents.emit(EventsName.DEFEAT_BAT);
+        new Drops(this.scene, this.x, this.y, "heart-full", this.target);
+        this.scene.time.delayedCall(500, () => {
           this.destroy();
         });
       }
     };
 
-    this.scene.game.events.on(EventsName.ATTACK, this.handleAttack, this);
+    sceneEvents.on(EventsName.ATTACK, this.handleAttack, this);
 
     this.on("destroy", () => {
-      this.scene.game.events.removeListener(
-        EventsName.ATTACK,
-        this.handleAttack
-      );
+      sceneEvents.removeListener(EventsName.ATTACK, this.handleAttack);
     });
   }
 
@@ -46,6 +55,10 @@ class Enemy extends CharacterBase {
       if (this.hit == 10) this.hit = 0;
       return;
     }
+
+    if (this.getBody().onFloor()) this.setVelocityX(0);
+
+    if (this.getBody().allowGravity) return;
 
     if (
       Math.Distance.BetweenPoints(

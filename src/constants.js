@@ -9,6 +9,7 @@ export const EventsName = {
   DEFEAT_BAT: "Kilt a bat",
   ATTACK: "Attack",
   GAMEOVER: "Game Over",
+  PLAYER_HEALTH_CHANGE: "Player health was changed",
 };
 
 export const GameStatus = {

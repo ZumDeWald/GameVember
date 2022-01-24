@@ -3,6 +3,7 @@ import { Score } from "../classes/Score.js";
 import { EventsName, GameStatus, ScoreOperations } from "../constants.js";
 import { CustomText } from "../classes/CustomText.js";
 import { GameParams } from "../constants.js";
+import { sceneEvents } from "../events/EventsCenter.js";
 
 class UIScene extends Scene {
   constructor() {
@@ -12,7 +13,7 @@ class UIScene extends Scene {
     this.scorePoints = (points) => {
       this.score.changeValue(ScoreOperations.INCREASE, points);
       if (this.score.getValue() >= GameParams.winScore) {
-        this.game.events.emit(EventsName.GAMEOVER, GameStatus.WIN);
+        sceneEvents.emit(EventsName.GAMEOVER, GameStatus.WIN);
       }
     };
 
@@ -25,7 +26,7 @@ class UIScene extends Scene {
         this.game.scale.height * 0.4,
         status === GameStatus.LOSE
           ? `You Got Ded!\nCLICK TO RESTART`
-          : `YOU ARE ROCK!\nCLICK TO RESTART`
+          : `YOU ROCK!\nCLICK TO RESTART`
       )
         .setAlign("center")
         .setColor(status === GameStatus.LOSE ? "#ff0000" : "#ffffff");
@@ -35,37 +36,66 @@ class UIScene extends Scene {
       );
 
       this.input.on("pointerdown", () => {
-        this.game.events.off(EventsName.GET_POTION, this.scorePoints);
-        this.game.events.off(EventsName.DEFEAT_BAT, this.scorePoints);
-        this.game.events.off(EventsName.GAMEOVER, this.gameEndHandler);
+        sceneEvents.off(EventsName.GET_POTION);
+        sceneEvents.off(EventsName.DEFEAT_BAT);
+        sceneEvents.off(EventsName.GAMEOVER);
+        sceneEvents.off(EventsName.PLAYER_HIT);
         this.scene.get("playGame").scene.restart();
-        this.scene.restart();
       });
     };
   }
 
   create() {
-    this.score = new Score(this, 20, 20, 0);
+    this.score = new Score(this, 10, 40, 0);
 
     this.initListeners();
+
+    this.hearts = this.add.group({
+      classType: Phaser.GameObjects.Image,
+    });
+
+    this.hearts.createMultiple({
+      key: "heart-full",
+      setXY: {
+        x: 30,
+        y: 20,
+        stepX: 36,
+      },
+      quantity: 3,
+    });
   }
 
   initListeners() {
-    this.game.events.on(
+    sceneEvents.on(
       EventsName.GET_POTION,
       () => {
         this.scorePoints(50);
       },
       this
     );
-    this.game.events.on(
+    sceneEvents.on(
       EventsName.DEFEAT_BAT,
       () => {
         this.scorePoints(20);
       },
       this
     );
-    this.game.events.once(EventsName.GAMEOVER, this.gameEndHandler, this);
+    sceneEvents.on(
+      EventsName.PLAYER_HEALTH_CHANGE,
+      this.handlePlayerHealthChange,
+      this
+    );
+    sceneEvents.once(EventsName.GAMEOVER, this.gameEndHandler, this);
+  }
+
+  handlePlayerHealthChange(newHealth) {
+    this.hearts.children.each((heart, i) => {
+      if (i < newHealth) {
+        heart.setTexture("heart-full");
+      } else {
+        heart.setTexture("heart-empty");
+      }
+    });
   }
 }
 

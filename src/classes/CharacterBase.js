@@ -3,7 +3,7 @@ import { Physics } from "phaser";
 export class CharacterBase extends Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame);
-    this.hp = 100;
+    this.hp = 3;
     this.hit = 0;
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -26,6 +26,12 @@ export class CharacterBase extends Physics.Arcade.Sprite {
         this.setAlpha(1);
       },
     });
+  }
+
+  getHealth(value) {
+    if (value) {
+      this.hp = this.hp + value;
+    }
   }
 
   takeHit(damage, vector) {
