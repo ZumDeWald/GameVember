@@ -8,7 +8,8 @@ const config = {
   parent: "phaser-example",
   width: 800,
   height: 600,
-  backgroundColor: "#222324",
+  backgroundColor: "#1C293C",
+  autoFocus: true,
   scene: [StartScene, Level1Scene, UIScene],
   physics: {
     default: "arcade",
@@ -16,6 +17,10 @@ const config = {
       gravity: { y: 600 },
       debug: false, // SET FALSE BEFORE DEPLOY //
     },
+  },
+  render: {
+    antialiasGL: false,
+    pixelArt: true,
   },
 };
 

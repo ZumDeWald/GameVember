@@ -1,10 +1,10 @@
 import { EventsName, GameStatus, PlayerStance } from "../constants.js";
 import { CharacterBase } from "./CharacterBase.js";
-import { CustomText } from "./CustomText.js";
+import { sceneEvents } from "../events/EventsCenter.js";
 
 export default class Player extends CharacterBase {
   constructor(scene, x, y) {
-    super(scene, x, y, "player", "idle1");
+    super(scene, x, y, "player", "player_idle_1");
 
     this.keyW = this.scene.input.keyboard.addKey("W");
     this.keyA = this.scene.input.keyboard.addKey("A");
@@ -14,45 +14,42 @@ export default class Player extends CharacterBase {
     this.keyL = this.scene.input.keyboard.addKey("L");
     this.keySpace = this.scene.input.keyboard.addKey("SPACE");
 
-    this.keyL.on("down", (e) => {
-      this.anims.play("player_atk", true);
+    this.keyL.on("down", () => {
+      if (this.getBody().onFloor()) {
+        this.play("player_atk", true);
+      } else {
+        this.play("player_air_atk", true);
+      }
       this.stance = PlayerStance.ATTACK;
       this.deltaCounter = 1;
-      this.scene.game.events.emit(EventsName.ATTACK);
+      sceneEvents.emit(EventsName.ATTACK);
     });
 
     this.stance = PlayerStance.STAND;
-    this.hit = 0;
     this.deltaCounter = 0;
     this.vWalk = 175;
-    this.vJump = -300;
-
-    this.hpValue = new CustomText(
-      this.scene,
-      this.x,
-      this.y - this.height,
-      this.hp.toString()
-    )
-      .setFontSize(12)
-      .setOrigin();
+    this.vJump = -250;
   }
 
   setHp() {
     if (this.hp <= 0) {
-      this.scene.game.events.emit(EventsName.GAMEOVER, GameStatus.LOSE);
+      this.disableBody();
+      this.play("player_die");
+      this.scene.time.delayedCall(1000, () => {
+        sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
+      });
     }
-    this.hpValue.setText(this.hp.toString());
-    this.hpValue.setPosition(this.x, this.y - this.height * 0.6);
+  }
+
+  takeHit(damage, vector) {
+    if (this.hit > 0) return;
+    this.play("player_fall");
+    super.takeHit(damage, vector);
+    sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, this.getHPValue() - 1);
   }
 
   preUpdate(t, dt) {
     super.preUpdate(t, dt);
-
-    if (this.stance === PlayerStance.ATTACK) {
-      this.setOffset(14, 5);
-    } else {
-      this.setOffset(0);
-    }
 
     if (this.deltaCounter > 0) {
       this.deltaCounter += dt;
@@ -69,17 +66,21 @@ export default class Player extends CharacterBase {
 
   update() {
     this.setHp();
+    if (this.hp <= 0) return;
 
     if (this.hit > 0) {
       this.hit += 1;
-      if (this.hit == 10) this.hit = 0;
-      return;
+      if (this.hit >= 50) this.hit = 0;
+      if (this.hit <= 10) return;
     }
 
     if (this.stance === PlayerStance.ATTACK) {
-      this.hpValue.setPosition(this.x, this.y - this.height * 0.4);
       if (this.getBody().onFloor()) this.getBody().setVelocityX(0);
       return;
+    }
+
+    if (this.getBody().deltaYFinal() > 0 && this.stance !== PlayerStance.JUMP) {
+      this.play("player_fall");
     }
 
     this.getBody().setVelocityX(0);
