@@ -18,11 +18,21 @@ export const GameStatus = {
 };
 
 export const GameParams = {
-  winScore: 110,
+  WINSCORE: 300,
+  VRUN: 175,
+  VJUMP: -240,
+  VAIR: 100,
 };
 
-export const PlayerStance = {
+export const PlayerState = {
   STAND: "Standing",
   JUMP: "Jumping",
   ATTACK: "Attacking",
+  WALL: "Wall Slide",
+  SLIDE: "Ground Slide",
+  RUN: "Running",
+  CAST: "Casting",
+  HIT: "Getting Hit",
+  DED: "Died",
+  FALL: "Falling",
 };

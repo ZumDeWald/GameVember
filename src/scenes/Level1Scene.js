@@ -1,9 +1,10 @@
-import Phaser from "phaser";
+import Phaser, { Math } from "phaser";
 import Player from "../classes/Player.js";
 import { EventsName } from "../constants.js";
 import Enemy from "../classes/Enemy";
 import { createEnemyAnims } from "../anims/enemyAnims.js";
 import { createPlayerAnims } from "../anims/playerAnims.js";
+import { createObjectAnims } from "../anims/objectAnims.js";
 import { sceneEvents } from "../events/EventsCenter";
 
 class Level1Scene extends Phaser.Scene {
@@ -13,8 +14,8 @@ class Level1Scene extends Phaser.Scene {
 
   initPotions() {
     const getablePoints = this.level1Map.filterObjects(
-      "getables",
-      (obj) => obj.name === "Pickup"
+      "health",
+      (obj) => obj.name === "heart"
     );
 
     const potions = getablePoints.map((potion) =>
@@ -44,12 +45,33 @@ class Level1Scene extends Phaser.Scene {
 
     const enemyPoints = this.level1Map.filterObjects(
       "enemies",
-      (obj) => obj.name === "Enemy"
+      (obj) => obj.name === "enemy"
     );
 
     this.enemies = enemyPoints.map((enemyPoint) => {
       return enemies.get(enemyPoint.x, enemyPoint.y, "bat", "Bat_Fly1");
     });
+  }
+
+  moveGrate(grate) {
+    grate.setVelocityY(-50);
+    this.time.delayedCall(750, () => {
+      grate.setVelocityY(0);
+      grate.destroy();
+    });
+  }
+
+  activateSwitch(theSwitch, player, grate) {
+    if (theSwitch.active) return;
+    const diff = Math.Distance.BetweenPoints(
+      { x: theSwitch.x, y: theSwitch.y },
+      { x: player.x, y: player.y }
+    );
+    if (diff < 25) {
+      theSwitch.play("switch_on");
+      this.moveGrate(grate);
+      theSwitch.active = true;
+    }
   }
 
   create() {
@@ -60,18 +82,13 @@ class Level1Scene extends Phaser.Scene {
 
     // Map
     this.level1Map = this.make.tilemap({ key: "Lair" });
-    const GBs = this.level1Map.addTilesetImage("GBs");
     const GBs2 = this.level1Map.addTilesetImage("GBs2");
-    this.level1Map.createLayer("background", [GBs, GBs2], 0, 0);
-    this.physics.world.setBounds(0, 0, 4800, 4800);
+    this.level1Map.createLayer("background", GBs2, 0, 0);
+    this.physics.world.setBounds(0, 0, 1280, 640);
 
-    this.level1Platforms = this.level1Map.createLayer(
-      "platforms",
-      [GBs, GBs2],
-      0,
-      0
-    );
+    this.level1Platforms = this.level1Map.createLayer("platforms", GBs2, 0, 0);
     this.level1Platforms.setCollisionByExclusion(-1, true);
+    this.level1Platforms.setDepth(5);
 
     this.oneWayPlatforms = this.level1Map.createLayer(
       "oneWayPlatforms",
@@ -79,34 +96,53 @@ class Level1Scene extends Phaser.Scene {
       0,
       0
     );
-    const oneWayTileIndecies = [1281, 1282, 1283, 1283, 1282, 1283];
+    const oneWayTileIndecies = [1195, 1196, 1215, 1216, 1217];
     this.oneWayPlatforms.forEachTile((t) => {
       if (oneWayTileIndecies.includes(t.index)) {
         t.setCollision(false, false, true, false);
       }
     });
 
-    this.level1Map.createLayer("foreground", [GBs, GBs2], 0, 0).setDepth(1);
+    this.level1Map.createLayer("foreground", GBs2, 0, 0).setDepth(1);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
     // Anims
     createEnemyAnims(this.anims);
     createPlayerAnims(this.anims);
+    createObjectAnims(this.anims);
 
     // Characters
-    this.player = new Player(this, 55, 200);
-    this.player.setSize(19, 34);
+    this.player = new Player(this, 100, 170);
+    this.player.setSize(19, 30);
+    this.player.setOffset(15, 5);
     this.initEnemies();
 
-    // Getables
+    // Inanimates
     this.initPotions();
+    this.switch = this.physics.add.sprite(350, 170, "switches", "SwitchOff1");
+    this.switch.play("switch_off");
+    this.switch.active = false;
+    this.switch.setDepth(-1);
+    sceneEvents.on(
+      EventsName.ATTACK,
+      () => {
+        this.activateSwitch(this.switch, this.player, this.grate);
+      },
+      this
+    );
+
+    this.grate = this.physics.add.image(404, 156, "grate");
+    this.grate.body.setAllowGravity(false);
+    this.grate.setImmovable(true);
 
     // Interactions
     this.physics.add.collider(this.player, this.level1Platforms);
+    this.physics.add.collider(this.player, this.grate);
     this.physics.add.collider(this.player, this.oneWayPlatforms);
     this.physics.add.collider(this.enemies, this.level1Platforms);
     this.physics.add.collider(this.enemies, this.enemies);
+    this.physics.add.collider(this.switch, this.level1Platforms);
     this.physics.add.collider(this.player, this.enemies, (obj1, obj2) => {
       const dirX = obj1.x - obj2.x;
       const dirY = obj1.y - obj2.y;
