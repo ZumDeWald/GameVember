@@ -15,7 +15,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 600 },
-      debug: false, // SET FALSE BEFORE DEPLOY //
+      debug: true, // SET FALSE BEFORE DEPLOY //
     },
   },
   render: {

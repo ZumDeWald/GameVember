@@ -26,7 +26,7 @@ class Enemy extends CharacterBase {
       );
 
       if (diff < 35) {
-        this.disableBody();
+        this.disableBody(true);
         this.play("bat_explode", true);
         sceneEvents.emit(EventsName.DEFEAT_BAT);
         new Drops(this.scene, this.x, this.y, "heart-full", this.target);

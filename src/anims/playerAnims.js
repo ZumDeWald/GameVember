@@ -73,7 +73,7 @@ export const createPlayerAnims = (animationManager) => {
       end: 1,
     }),
     frameRate: 8,
-    repeat: 0,
+    repeat: -1,
   });
 
   animationManager.create({
@@ -84,7 +84,7 @@ export const createPlayerAnims = (animationManager) => {
       end: 1,
     }),
     frameRate: 8,
-    repeat: 0,
+    repeat: -1,
   });
 
   animationManager.create({
@@ -94,8 +94,8 @@ export const createPlayerAnims = (animationManager) => {
       start: 0,
       end: 1,
     }),
-    frameRate: 8,
-    repeat: 0,
+    frameRate: 10,
+    repeat: -1,
   });
 
   animationManager.create({
@@ -117,6 +117,6 @@ export const createPlayerAnims = (animationManager) => {
       end: 3,
     }),
     frameRate: 8,
-    repeat: 0,
+    repeat: -1,
   });
 };

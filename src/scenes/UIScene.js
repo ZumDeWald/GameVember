@@ -12,9 +12,9 @@ class UIScene extends Scene {
 
     this.scorePoints = (points) => {
       this.score.changeValue(ScoreOperations.INCREASE, points);
-      if (this.score.getValue() >= GameParams.winScore) {
-        sceneEvents.emit(EventsName.GAMEOVER, GameStatus.WIN);
-      }
+      // if (this.score.getValue() >= GameParams.winScore) {
+      //   sceneEvents.emit(EventsName.GAMEOVER, GameStatus.WIN);
+      // }
     };
 
     this.gameEndHandler = (status) => {

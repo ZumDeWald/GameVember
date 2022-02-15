@@ -322,8 +322,6 @@
     }
   ],
   "meta": {
-    "app": "https://www.leshylabs.com/apps/sstool/",
-    "version": "Leshy SpriteSheet Tool v0.8.4",
     "image": "player.png",
     "size": { "w": 254, "h": 303 },
     "scale": 1

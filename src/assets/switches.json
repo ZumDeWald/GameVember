@@ -1,0 +1,73 @@
+{
+  "frames": [
+    {
+      "filename": "SwitchOff1",
+      "frame": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOff2",
+      "frame": { "x": 13, "y": 0, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOff3",
+      "frame": { "x": 26, "y": 0, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOff4",
+      "frame": { "x": 39, "y": 0, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOn1",
+      "frame": { "x": 0, "y": 28, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOn2",
+      "frame": { "x": 13, "y": 28, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOn3",
+      "frame": { "x": 26, "y": 28, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    },
+    {
+      "filename": "SwitchOn4",
+      "frame": { "x": 39, "y": 28, "w": 12, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 12, "h": 27 },
+      "sourceSize": { "w": 12, "h": 27 }
+    }
+  ],
+  "meta": {
+    "image": "Switches.png",
+    "size": { "w": 51, "h": 55 },
+    "scale": 1
+  }
+}
