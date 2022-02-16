@@ -36,21 +36,28 @@ export default class Player extends CharacterBase {
     // this.vJump = -250;
   }
 
-  setHp() {
-    if (this.hp <= 0) {
-      this.disableBody();
-      this.play("player_die");
-      this.scene.time.delayedCall(1000, () => {
-        sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
-      });
-    }
-  }
+  // setHp() {
+  //   if (this.hp <= 0) {
+  //     this.disableBody();
+  //     this.play("player_die");
+  //     this.scene.time.delayedCall(1000, () => {
+  //       sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
+  //     });
+  //   }
+  // }
 
   takeHit(damage, vector) {
     if (this.hitCounter > 0) return;
-    this.state = PlayerState.HIT;
-    super.takeHit(damage, vector);
-    sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, this.getHPValue());
+    if (this.hp === 1) {
+      this.state = PlayerState.DED;
+      this.scene.time.delayedCall(300, () => {
+        sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
+      });
+    } else {
+      this.state = PlayerState.HIT;
+      super.takeHit(damage, vector);
+      sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, this.getHPValue());
+    }
   }
 
   preUpdate(t, dt) {
