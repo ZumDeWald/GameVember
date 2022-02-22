@@ -87,7 +87,7 @@ class Level1Scene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, 1280, 640);
 
     this.level1Platforms = this.level1Map.createLayer("platforms", GBs2, 0, 0);
-    this.level1Platforms.setCollisionByExclusion(-1, true);
+    this.level1Platforms.setCollisionByExclusion(-1, true, false);
     this.level1Platforms.setDepth(5);
 
     this.oneWayPlatforms = this.level1Map.createLayer(
@@ -114,8 +114,8 @@ class Level1Scene extends Phaser.Scene {
 
     // Characters
     this.player = new Player(this, 100, 170);
-    this.player.setSize(19, 30);
-    this.player.setOffset(15, 5);
+    this.player.setSize(16, 28);
+    this.player.setOffset(16, 8);
     this.initEnemies();
 
     // Inanimates
@@ -137,7 +137,15 @@ class Level1Scene extends Phaser.Scene {
     this.grate.setImmovable(true);
 
     // Interactions
-    this.physics.add.collider(this.player, this.level1Platforms);
+    this.physics.add.collider(
+      this.player,
+      this.level1Platforms,
+      (obj1, obj2) => {
+        obj1.data.touchingWall = true;
+      },
+      null,
+      this
+    );
     this.physics.add.collider(this.player, this.grate);
     this.physics.add.collider(this.player, this.oneWayPlatforms);
     this.physics.add.collider(this.enemies, this.level1Platforms);
@@ -168,6 +176,12 @@ class Level1Scene extends Phaser.Scene {
     this.mini.setBackgroundColor("#ddd3");
     this.mini.setZoom(0.2);
     this.mini.setDeadzone(50, 50);
+    this.mini.setBounds(
+      0,
+      0,
+      this.level1Map.widthInPixels,
+      this.level1Map.heightInPixels
+    );
   }
 
   update() {

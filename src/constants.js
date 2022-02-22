@@ -19,9 +19,11 @@ export const GameStatus = {
 
 export const GameParams = {
   WINSCORE: 300,
-  VRUN: 175,
-  VJUMP: -240,
-  VAIR: 100,
+  VRUN: 160,
+  VJUMP: -225,
+  VWJUMP: -180,
+  VAIR: 125,
+  VWALL: 5,
 };
 
 export const PlayerState = {
@@ -29,6 +31,7 @@ export const PlayerState = {
   JUMP: "Jumping",
   ATTACK: "Attacking",
   WALL: "Wall Slide",
+  WALLJUMP: "Wall Jump",
   SLIDE: "Ground Slide",
   RUN: "Running",
   CAST: "Casting",

@@ -28,10 +28,14 @@ export default class Player extends CharacterBase {
     //   sceneEvents.emit(EventsName.ATTACK);
     // });
 
-    this.state = PlayerState.STAND;
-    this.attackCounter = 0;
-    this.hitCounter = 0;
-    this.jumped = false;
+    this.data = {
+      state: PlayerState.STAND,
+      attackCounter: 0,
+      hitCounter: 0,
+      inputTimeout: 0,
+      jumped: false,
+      touchingWall: false,
+    };
     // this.vWalk = 175;
     // this.vJump = -250;
   }
@@ -79,7 +83,7 @@ export default class Player extends CharacterBase {
   update() {
     // this.setHp();
 
-    processInput[this.state](this);
+    processInput[this.data.state](this);
 
     // if (this.hp <= 0) this.state = PlayerState.DED;
 
