@@ -9,6 +9,7 @@ class Enemy extends CharacterBase {
     super(scene, x, y, texture, frame);
     this.target = target;
     this.AGGRESSOR_RADIUS = 100;
+    this.hit = false;
 
     this.handleAttack = () => {
       const enemyLeft = this.x - this.target.x < 0 ? true : false;
@@ -29,7 +30,10 @@ class Enemy extends CharacterBase {
         this.disableBody(true);
         this.play("bat_explode", true);
         sceneEvents.emit(EventsName.DEFEAT_BAT);
-        new Drops(this.scene, this.x, this.y, "heart-full", this.target);
+        if (!this.hit) {
+          this.hit = true;
+          new Drops(this.scene, this.x, this.y, "heart-full", this.target);
+        }
         this.scene.time.delayedCall(500, () => {
           this.destroy();
         });
