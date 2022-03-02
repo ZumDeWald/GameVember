@@ -26,8 +26,6 @@
     }
   ],
   "meta": {
-    "app": "https://www.leshylabs.com/apps/sstool/",
-    "version": "Leshy SpriteSheet Tool v0.8.4",
     "image": "potions.png",
     "size": { "w": 20, "h": 24 },
     "scale": 1

@@ -32,7 +32,8 @@ class Enemy extends CharacterBase {
         sceneEvents.emit(EventsName.DEFEAT_BAT);
         if (!this.hit) {
           this.hit = true;
-          new Drops(this.scene, this.x, this.y, "heart-full", this.target);
+          let healthDropValue = this.target.hp < 25 ? 20 : 10;
+          new Drops(this.scene, this.x, this.y, this.target, healthDropValue);
         }
         this.scene.time.delayedCall(500, () => {
           this.destroy();
@@ -53,16 +54,6 @@ class Enemy extends CharacterBase {
 
   preUpdate(time, delta) {
     super.preUpdate(time, delta);
-
-    if (this.hit > 0) {
-      this.hit += 1;
-      if (this.hit == 10) this.hit = 0;
-      return;
-    }
-
-    if (this.getBody().onFloor()) this.setVelocityX(0);
-
-    if (this.getBody().allowGravity) return;
 
     if (
       Math.Distance.BetweenPoints(

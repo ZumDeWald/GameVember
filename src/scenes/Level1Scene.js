@@ -6,30 +6,11 @@ import { createEnemyAnims } from "../anims/enemyAnims.js";
 import { createPlayerAnims } from "../anims/playerAnims.js";
 import { createObjectAnims } from "../anims/objectAnims.js";
 import { sceneEvents } from "../events/EventsCenter";
+import getablesFactory from "../utilities/getablesFactory.js";
 
 class Level1Scene extends Phaser.Scene {
   constructor() {
     super("playGame");
-  }
-
-  initPotions() {
-    const getablePoints = this.level1Map.filterObjects(
-      "health",
-      (obj) => obj.name === "heart"
-    );
-
-    const potions = getablePoints.map((potion) =>
-      this.physics.add.sprite(potion.x, potion.y, "potions", "potion_red")
-    );
-
-    potions.forEach((potion) => {
-      this.physics.add.overlap(this.player, potion, (obj1, obj2) => {
-        sceneEvents.emit(EventsName.GET_POTION);
-        obj2.destroy();
-        this.cameras.main.flash(400, 25, 180, 225);
-      });
-      this.physics.add.collider(potion, this.level1Platforms);
-    });
   }
 
   initEnemies() {
@@ -62,7 +43,7 @@ class Level1Scene extends Phaser.Scene {
   }
 
   activateSwitch(theSwitch, player, grate) {
-    if (theSwitch.active) return;
+    if (theSwitch.activated) return;
     const diff = Math.Distance.BetweenPoints(
       { x: theSwitch.x, y: theSwitch.y },
       { x: player.x, y: player.y }
@@ -70,7 +51,7 @@ class Level1Scene extends Phaser.Scene {
     if (diff < 25) {
       theSwitch.play("switch_on");
       this.moveGrate(grate);
-      theSwitch.active = true;
+      theSwitch.activated = true;
     }
   }
 
@@ -119,10 +100,40 @@ class Level1Scene extends Phaser.Scene {
     this.initEnemies();
 
     // Inanimates
-    this.initPotions();
+    getablesFactory(
+      this,
+      this.level1Map,
+      "health",
+      "heart",
+      "potions",
+      "potion_red",
+      EventsName.GET_POTION,
+      false
+    );
+    getablesFactory(
+      this,
+      this.level1Map,
+      "powerUps",
+      "telekenesis",
+      "potions",
+      "potion_white",
+      EventsName.GET_TELE,
+      true
+    );
+    getablesFactory(
+      this,
+      this.level1Map,
+      "powerUps",
+      "wallCling",
+      "potions",
+      "potion_purple",
+      EventsName.GET_CLING,
+      true
+    );
+
     this.switch = this.physics.add.sprite(350, 170, "switches", "SwitchOff1");
-    this.switch.play("switch_off");
-    this.switch.active = false;
+    this.switch.play("switch_off", true);
+    this.switch.activated = false;
     this.switch.setDepth(-1);
     sceneEvents.on(
       EventsName.ATTACK,
@@ -141,7 +152,7 @@ class Level1Scene extends Phaser.Scene {
       this.player,
       this.level1Platforms,
       (obj1, obj2) => {
-        obj1.data.touchingWall = true;
+        obj1.settings.touchingWall = true;
       },
       null,
       this
@@ -152,11 +163,8 @@ class Level1Scene extends Phaser.Scene {
     this.physics.add.collider(this.enemies, this.enemies);
     this.physics.add.collider(this.switch, this.level1Platforms);
     this.physics.add.collider(this.player, this.enemies, (obj1, obj2) => {
-      const dirX = obj1.x - obj2.x;
-      const dirY = obj1.y - obj2.y;
-      const dirV = new Phaser.Math.Vector2(dirX, dirY).normalize().scale(150);
-      obj1.takeHit(1, dirV);
-      obj2.takeHit(0, { x: -dirV.x, y: -dirV.y });
+      obj1.takeHit(8);
+      obj2.takeHit(0);
     });
 
     // Camera

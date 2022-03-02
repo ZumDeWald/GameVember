@@ -233,6 +233,18 @@
                  "width":0,
                  "x":579.333,
                  "y":234.667
+                }, 
+                {
+                 "height":0,
+                 "id":32,
+                 "name":"heart",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":19.3333333333334,
+                 "y":461.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -245,18 +257,6 @@
          "id":10,
          "name":"powerUps",
          "objects":[
-                {
-                 "height":0,
-                 "id":7,
-                 "name":"heart",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":18,
-                 "y":456.667
-                }, 
                 {
                  "height":0,
                  "id":9,
@@ -312,7 +312,7 @@
          "y":0
         }],
  "nextlayerid":12,
- "nextobjectid":32,
+ "nextobjectid":33,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
