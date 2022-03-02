@@ -1,33 +1,33 @@
-import { PlayerState, GameParams, EventsName } from "./constants.js";
-import { sceneEvents } from "./events/EventsCenter.js";
+import { PlayerState, GameParams, EventsName } from "../constants.js";
+import { sceneEvents } from "../events/EventsCenter.js";
 
 export const processInput = {
   [PlayerState.STAND]: (player) => {
     player.play("player_idle", true);
-    player.data.jumped = false;
+    player.settings.jumped = false;
     player.body.setVelocityX(0);
     if (player.body.deltaYFinal() > 1) {
-      player.data.state = PlayerState.FALL;
+      player.settings.state = PlayerState.FALL;
     } else if (player.inputs.keyL.isDown) {
-      player.data.state = PlayerState.ATTACK;
+      player.settings.state = PlayerState.ATTACK;
     } else if (player.inputs.keyK.isDown) {
-      player.data.state = PlayerState.JUMP;
+      player.settings.state = PlayerState.JUMP;
     } else if (player.inputs.keyA.isDown || player.inputs.keyD.isDown) {
-      player.data.state = PlayerState.RUN;
+      player.settings.state = PlayerState.RUN;
     }
   },
   [PlayerState.JUMP]: (player) => {
     player.play("player_jump", true);
-    if (!player.data.jumped) {
+    if (!player.settings.jumped) {
       player.body.setVelocityY(GameParams.VJUMP);
-      player.data.jumped = true;
+      player.settings.jumped = true;
     }
     if (player.body.onFloor()) {
-      player.data.state = PlayerState.STAND;
+      player.settings.state = PlayerState.STAND;
     } else if (player.inputs.keyL.isDown) {
-      player.data.state = PlayerState.ATTACK;
+      player.settings.state = PlayerState.ATTACK;
     } else if (!player.body.onFloor() && player.body.onWall()) {
-      player.data.state = PlayerState.WALL;
+      player.settings.state = PlayerState.WALL;
     } else if (player.inputs.keyA.isDown) {
       player.body.setVelocityX(-GameParams.VAIR);
       player.checkFlip();
@@ -37,15 +37,16 @@ export const processInput = {
     }
   },
   [PlayerState.ATTACK]: (player) => {
-    player.data.attackCounter += 1;
-    if (!player.data.jumped) player.body.setVelocityX(0);
-    if (player.data.attackCounter === 4) sceneEvents.emit(EventsName.ATTACK);
-    if (player.data.attackCounter >= 16) {
-      player.data.attackCounter = 0;
+    player.settings.attackCounter += 1;
+    if (!player.settings.jumped) player.body.setVelocityX(0);
+    if (player.settings.attackCounter === 4)
+      sceneEvents.emit(EventsName.ATTACK);
+    if (player.settings.attackCounter >= 16) {
+      player.settings.attackCounter = 0;
       if (player.body.onFloor()) {
-        player.data.state = PlayerState.STAND;
+        player.settings.state = PlayerState.STAND;
       } else {
-        player.data.state = PlayerState.FALL;
+        player.settings.state = PlayerState.FALL;
       }
     }
     if (player.body.onFloor()) {
@@ -56,55 +57,66 @@ export const processInput = {
   },
   [PlayerState.WALL]: (player) => {
     player.play("player_wall_slide", true);
-    player.data.jumped = false;
+    player.settings.jumped = false;
     player.body.setVelocityY(5);
+    player.settings.inputTimeout += 1;
 
     if (player.body.onFloor()) {
-      player.data.state = PlayerState.STAND;
+      player.settings.inputTimeout = 0;
+      player.settings.state = PlayerState.STAND;
     } else if (player.inputs.keyL.isDown) {
-      player.data.state = PlayerState.ATTACK;
+      player.settings.inputTimeout = 0;
+      player.settings.state = PlayerState.ATTACK;
       player.flipX = !player.flipX;
-    } else if (player.inputs.keyK.isDown) {
-      player.data.state = PlayerState.WALLJUMP;
+    } else if (player.inputs.keyK.isDown && player.settings.inputTimeout > 12) {
+      player.settings.inputTimeout = 0;
+      player.settings.state = PlayerState.WALLJUMP;
       player.flipX = !player.flipX;
     } else if (player.inputs.keyA.isDown) {
       player.body.setVelocityX(-GameParams.VWALL);
-      if (!player.data.touchingWall) player.data.state = PlayerState.FALL;
+      if (!player.settings.touchingWall) {
+        player.settings.inputTimeout = 0;
+        player.settings.state = PlayerState.FALL;
+      }
     } else if (player.inputs.keyD.isDown) {
       player.body.setVelocityX(GameParams.VWALL);
-      if (!player.data.touchingWall) player.data.state = PlayerState.FALL;
+      if (!player.settings.touchingWall) {
+        player.settings.inputTimeout = 0;
+        player.settings.state = PlayerState.FALL;
+      }
     } else {
-      player.data.state = PlayerState.FALL;
+      player.settings.inputTimeout = 0;
+      player.settings.state = PlayerState.FALL;
     }
 
-    player.data.touchingWall = false;
+    player.settings.touchingWall = false;
   },
   [PlayerState.WALLJUMP]: (player) => {
     player.play("player_jump", true);
 
-    if (player.data.inputTimeout >= 8) {
-      player.data.inputTimeout = 0;
-      player.data.state = PlayerState.JUMP;
+    if (player.settings.inputTimeout >= 6) {
+      player.settings.inputTimeout = 0;
+      player.settings.state = PlayerState.JUMP;
     } else {
-      player.data.inputTimeout += 1;
+      player.settings.inputTimeout += 1;
     }
 
-    if (!player.data.jumped) {
+    if (!player.settings.jumped) {
       player.body.setVelocityY(GameParams.VWJUMP);
       player.body.setVelocityX(player.inputs.keyA.isDown ? 80 : -80);
-      player.data.jumped = true;
+      player.settings.jumped = true;
     }
   },
   [PlayerState.SLIDE]: (player) => {},
   [PlayerState.RUN]: (player) => {
     player.play("player_run", true);
-    player.data.jumped = false;
+    player.settings.jumped = false;
     if (player.body.deltaYFinal() > 1) {
-      player.data.state = PlayerState.FALL;
+      player.settings.state = PlayerState.FALL;
     } else if (player.inputs.keyL.isDown) {
-      player.data.state = PlayerState.ATTACK;
+      player.settings.state = PlayerState.ATTACK;
     } else if (player.inputs.keyK.isDown) {
-      player.data.state = PlayerState.JUMP;
+      player.settings.state = PlayerState.JUMP;
     } else if (player.inputs.keyA.isDown) {
       player.body.setVelocityX(-GameParams.VRUN);
       player.checkFlip();
@@ -112,17 +124,14 @@ export const processInput = {
       player.body.setVelocityX(GameParams.VRUN);
       player.checkFlip();
     } else {
-      player.data.state = PlayerState.STAND;
+      player.settings.state = PlayerState.STAND;
     }
   },
   [PlayerState.CAST]: (player) => {},
   [PlayerState.HIT]: (player) => {
-    player.play("player_fall");
-    if (player.data.hitCounter >= 10) {
-      player.data.hitCounter = 0;
-      player.data.state = PlayerState.STAND;
-    } else {
-      player.data.hitCounter += 1;
+    player.play("player_fall", true);
+    if (player.settings.hitCounter === 1) {
+      player.body.setVelocityX(player.flipX ? 110 : -110);
     }
   },
   [PlayerState.DED]: (player) => {
@@ -132,11 +141,11 @@ export const processInput = {
   [PlayerState.FALL]: (player) => {
     player.play("player_fall", true);
     if (player.body.onFloor()) {
-      player.data.state = PlayerState.STAND;
+      player.settings.state = PlayerState.STAND;
     } else if (player.inputs.keyL.isDown) {
-      player.data.state = PlayerState.ATTACK;
+      player.settings.state = PlayerState.ATTACK;
     } else if (!player.body.onFloor() && player.body.onWall()) {
-      player.data.state = PlayerState.WALL;
+      player.settings.state = PlayerState.WALL;
     } else if (player.inputs.keyA.isDown) {
       player.body.setVelocityX(-GameParams.VAIR);
       player.checkFlip();

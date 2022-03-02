@@ -1,7 +1,7 @@
 import { EventsName, GameStatus, PlayerState } from "../constants.js";
 import { CharacterBase } from "./CharacterBase.js";
 import { sceneEvents } from "../events/EventsCenter.js";
-import { processInput } from "../processInput.js";
+import { processInput } from "../utilities/processInput.js";
 
 export default class Player extends CharacterBase {
   constructor(scene, x, y) {
@@ -28,7 +28,7 @@ export default class Player extends CharacterBase {
     //   sceneEvents.emit(EventsName.ATTACK);
     // });
 
-    this.data = {
+    this.settings = {
       state: PlayerState.STAND,
       attackCounter: 0,
       hitCounter: 0,
@@ -50,17 +50,29 @@ export default class Player extends CharacterBase {
   //   }
   // }
 
-  takeHit(damage, vector) {
-    if (this.hitCounter > 0) return;
-    if (this.hp === 1) {
+  takeHit(damage) {
+    if (this.hp <= 0) {
+      sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, 0);
       this.state = PlayerState.DED;
       this.scene.time.delayedCall(300, () => {
         sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
       });
+    } else if (this.settings.hitCounter === 0) {
+      super.takeHit(damage);
+      this.settings.hitCounter = 1;
+      this.settings.state = PlayerState.HIT;
+      sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, this.hp - damage);
+    }
+  }
+
+  processHit() {
+    if (this.settings.hitCounter === 10) {
+      this.settings.state = PlayerState.STAND;
+      this.settings.hitCounter += 1;
+    } else if (this.settings.hitCounter >= 45) {
+      this.settings.hitCounter = 0;
     } else {
-      this.state = PlayerState.HIT;
-      super.takeHit(damage, vector);
-      sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, this.getHPValue());
+      this.settings.hitCounter += 1;
     }
   }
 
@@ -83,7 +95,8 @@ export default class Player extends CharacterBase {
   update() {
     // this.setHp();
 
-    processInput[this.data.state](this);
+    if (this.settings.hitCounter >= 1) this.processHit();
+    processInput[this.settings.state](this);
 
     // if (this.hp <= 0) this.state = PlayerState.DED;
 

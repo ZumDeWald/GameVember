@@ -3,7 +3,8 @@ import { EventsName } from "../constants";
 import { sceneEvents } from "../events/EventsCenter";
 
 class Drops extends Physics.Arcade.Sprite {
-  constructor(scene, x, y, texture, target) {
+  constructor(scene, x, y, target, healthValue) {
+    let texture = healthValue > 15 ? "health-lg" : "health-sm";
     super(scene, x, y, texture);
     this.target = target;
     this.PICKUP_RADIUS = 100;
@@ -15,9 +16,9 @@ class Drops extends Physics.Arcade.Sprite {
     this.scene.physics.add.overlap(this.target, this, (obj1, obj2) => {
       sceneEvents.emit(
         EventsName.PLAYER_HEALTH_CHANGE,
-        this.target.getHPValue() + 1
+        this.target.getHPValue() + healthValue
       );
-      obj1.getHealth(1);
+      obj1.getHealth(healthValue);
       obj2.destroy();
     });
   }

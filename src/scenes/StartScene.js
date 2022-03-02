@@ -13,10 +13,10 @@ import BatSprites from "../assets/bat.png";
 import BatAtlas from "../assets/bat.json";
 import BatExplode from "../assets/bat_explode.png";
 import BatExplodeAtlas from "../assets/bat_explode.json";
-import Heart_Full from "../assets/heart_full.png";
-import Heart_Half from "../assets/heart_half.png";
-import Heart_Empty from "../assets/heart_empty.png";
+import Health_lg from "../assets/Health_lg.png";
+import Health_sm from "../assets/Health_sm.png";
 import Grate from "../assets/GrateNoEnds.png";
+import Heart from "../assets/heart_full.png";
 
 class StartScene extends Phaser.Scene {
   constructor() {
@@ -31,10 +31,10 @@ class StartScene extends Phaser.Scene {
     this.load.atlas("bat", BatSprites, BatAtlas);
     this.load.atlas("bat-explode", BatExplode, BatExplodeAtlas);
     this.load.atlas("switches", SwitchSprites, SwitchAtlas);
-    this.load.image("heart-full", Heart_Full);
-    this.load.image("heart-half", Heart_Half);
-    this.load.image("heart-empty", Heart_Empty);
+    this.load.image("health-lg", Health_lg);
+    this.load.image("health-sm", Health_sm);
     this.load.image("grate", Grate);
+    this.load.image("heart", Heart);
   }
 
   create() {

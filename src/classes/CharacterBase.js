@@ -1,9 +1,10 @@
 import { Physics } from "phaser";
+import { GameParams } from "../constants";
 
 export class CharacterBase extends Physics.Arcade.Sprite {
   constructor(scene, x, y, texture, frame) {
     super(scene, x, y, texture, frame);
-    this.hp = 3;
+    this.hp = 100;
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.getBody().setCollideWorldBounds(true);
@@ -12,26 +13,26 @@ export class CharacterBase extends Physics.Arcade.Sprite {
   getDamage(value) {
     this.scene.tweens.add({
       targets: this,
-      duration: 100,
-      repeat: 3,
+      duration: 64,
+      repeat: 4,
       yoyo: true,
       alpha: 0.5,
+      onStart: () => {
+        if (value) this.hp = this.hp - value;
+      },
       onComplete: () => {
         this.setAlpha(1);
       },
     });
-    if (value) this.hp = this.hp - value;
   }
 
   getHealth(value) {
-    if (value) {
-      this.hp = this.hp + value;
-    }
+    this.hp = this.hp + value;
+    if (this.hp > GameParams.HPMAX) this.hp = GameParams.HPMAX;
   }
 
-  takeHit(damage, vector) {
+  takeHit(damage) {
     if (damage > 0) this.getDamage(damage);
-    this.setVelocity(vector.x, vector.y);
   }
 
   getHPValue() {
@@ -39,7 +40,6 @@ export class CharacterBase extends Physics.Arcade.Sprite {
   }
 
   checkFlip() {
-    if (this.hit > 0) return;
     if (this.body.velocity.x < 0) {
       this.flipX = true;
     } else {

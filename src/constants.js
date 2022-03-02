@@ -1,15 +1,17 @@
 export const ScoreOperations = {
   INCREASE: "Increase",
   DECREASE: "Decrease",
-  SET_VALUE: "Set Value",
+  SET_VALUE: "SetValue",
 };
 
 export const EventsName = {
-  GET_POTION: "Get Potion",
-  DEFEAT_BAT: "Kilt a bat",
+  GET_POTION: "GetPotion",
+  GET_TELE: "GetTelekenesis",
+  GET_CLING: "GetWallCling",
+  DEFEAT_BAT: "KiltBat",
   ATTACK: "Attack",
-  GAMEOVER: "Game Over",
-  PLAYER_HEALTH_CHANGE: "Player health was changed",
+  GAMEOVER: "GameOver",
+  PLAYER_HEALTH_CHANGE: "PlayerHealthChange",
 };
 
 export const GameStatus = {
@@ -24,18 +26,20 @@ export const GameParams = {
   VWJUMP: -180,
   VAIR: 125,
   VWALL: 5,
+  HPMAX: 100,
+  HPADD: 10,
 };
 
 export const PlayerState = {
   STAND: "Standing",
   JUMP: "Jumping",
   ATTACK: "Attacking",
-  WALL: "Wall Slide",
-  WALLJUMP: "Wall Jump",
-  SLIDE: "Ground Slide",
+  WALL: "WallSlide",
+  WALLJUMP: "WallJump",
+  SLIDE: "GroundSlide",
   RUN: "Running",
   CAST: "Casting",
-  HIT: "Getting Hit",
+  HIT: "Hit",
   DED: "Died",
   FALL: "Falling",
 };
