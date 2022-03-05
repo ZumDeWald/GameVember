@@ -25,7 +25,7 @@ class UIScene extends Scene {
         this.game.scale.width / 2,
         this.game.scale.height * 0.4,
         status === GameStatus.LOSE
-          ? `You Got Ded!\nCLICK TO RESTART`
+          ? `You Got Ded!\nCLICK TO CONTINUE`
           : `YOU ROCK!\nCLICK TO RESTART`
       )
         .setAlign("center")
@@ -35,13 +35,17 @@ class UIScene extends Scene {
         this.game.scale.height * 0.4
       );
 
-      this.input.on("pointerdown", () => {
-        sceneEvents.off(EventsName.GET_POTION);
-        sceneEvents.off(EventsName.DEFEAT_BAT);
-        sceneEvents.off(EventsName.GAMEOVER);
-        sceneEvents.off(EventsName.PLAYER_HIT);
-        this.scene.get("playGame").scene.restart();
-      });
+      this.input.once(
+        "pointerdown",
+        () => {
+          this.cameras.main.setBackgroundColor("rgba(0,0,0,0)");
+          this.gameEndPhrase.destroy(true);
+          this.handlePlayerHealthChange(GameParams.HPMAX);
+          sceneEvents.emit(EventsName.RESET_PLAYER);
+          this.game.scene.resume("playGame");
+        },
+        this
+      );
     };
   }
 
@@ -99,7 +103,7 @@ class UIScene extends Scene {
       this
     );
     sceneEvents.on(EventsName.GET_POTION, this.handleGetPotion, this);
-    sceneEvents.once(EventsName.GAMEOVER, this.gameEndHandler, this);
+    sceneEvents.on(EventsName.GAMEOVER, this.gameEndHandler, this);
   }
 
   handlePlayerHealthChange(newHealth) {

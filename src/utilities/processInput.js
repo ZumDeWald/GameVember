@@ -26,7 +26,11 @@ export const processInput = {
       player.settings.state = PlayerState.STAND;
     } else if (player.inputs.keyL.isDown) {
       player.settings.state = PlayerState.ATTACK;
-    } else if (!player.body.onFloor() && player.body.onWall()) {
+    } else if (
+      player.settings.wallCling &&
+      !player.body.onFloor() &&
+      player.body.onWall()
+    ) {
       player.settings.state = PlayerState.WALL;
     } else if (player.inputs.keyA.isDown) {
       player.body.setVelocityX(-GameParams.VAIR);
@@ -144,7 +148,11 @@ export const processInput = {
       player.settings.state = PlayerState.STAND;
     } else if (player.inputs.keyL.isDown) {
       player.settings.state = PlayerState.ATTACK;
-    } else if (!player.body.onFloor() && player.body.onWall()) {
+    } else if (
+      player.settings.wallCling &&
+      !player.body.onFloor() &&
+      player.body.onWall()
+    ) {
       player.settings.state = PlayerState.WALL;
     } else if (player.inputs.keyA.isDown) {
       player.body.setVelocityX(-GameParams.VAIR);

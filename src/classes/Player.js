@@ -1,4 +1,9 @@
-import { EventsName, GameStatus, PlayerState } from "../constants.js";
+import {
+  EventsName,
+  GameParams,
+  GameStatus,
+  PlayerState,
+} from "../constants.js";
 import { CharacterBase } from "./CharacterBase.js";
 import { sceneEvents } from "../events/EventsCenter.js";
 import { processInput } from "../utilities/processInput.js";
@@ -35,9 +40,41 @@ export default class Player extends CharacterBase {
       inputTimeout: 0,
       jumped: false,
       touchingWall: false,
+      wallCling: false,
+      cast: false,
     };
     // this.vWalk = 175;
     // this.vJump = -250;
+
+    sceneEvents.on(
+      EventsName.GET_TELE,
+      () => {
+        this.settings.cast = true;
+      },
+      this
+    );
+    sceneEvents.on(
+      EventsName.GET_CLING,
+      () => {
+        this.settings.wallCling = true;
+      },
+      this
+    );
+    sceneEvents.on(
+      EventsName.RESET_PLAYER,
+      () => {
+        this.body.reset(100, 165);
+        this.hp = GameParams.HPMAX;
+        this.settings.state = PlayerState.STAND;
+        this.settings.attackCounter = 0;
+        this.settings.hitCounter = 0;
+        this.settings.inputTimeout = 0;
+        this.settings.jumped = false;
+        this.settings.touchingWall = false;
+        this.flipX = false;
+      },
+      this
+    );
   }
 
   // setHp() {
@@ -54,9 +91,7 @@ export default class Player extends CharacterBase {
     if (this.hp <= 0) {
       sceneEvents.emit(EventsName.PLAYER_HEALTH_CHANGE, 0);
       this.state = PlayerState.DED;
-      this.scene.time.delayedCall(300, () => {
-        sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
-      });
+      sceneEvents.emit(EventsName.GAMEOVER, GameStatus.LOSE);
     } else if (this.settings.hitCounter === 0) {
       super.takeHit(damage);
       this.settings.hitCounter = 1;

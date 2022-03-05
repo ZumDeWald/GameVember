@@ -11,6 +11,7 @@ export const EventsName = {
   DEFEAT_BAT: "KiltBat",
   ATTACK: "Attack",
   GAMEOVER: "GameOver",
+  RESET_PLAYER: "Reset",
   PLAYER_HEALTH_CHANGE: "PlayerHealthChange",
 };
 
