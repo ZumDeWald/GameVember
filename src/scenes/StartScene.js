@@ -1,7 +1,5 @@
 import Phaser from "phaser";
-import Level1 from "../assets/Level1.json";
 import Lair from "../assets/FirstLair.json";
-import GameVemberTiles from "../assets/LevelBlocks.png";
 import GBs2 from "../assets/GameBlocks2.png";
 import PlayerSprite from "../assets/player.png";
 import PlayerAtlas from "../assets/player.json";
@@ -17,6 +15,8 @@ import Health_lg from "../assets/Health_lg.png";
 import Health_sm from "../assets/Health_sm.png";
 import Grate from "../assets/GrateNoEnds.png";
 import Heart from "../assets/heart_full.png";
+import Computron from "../assets/Computron.png";
+import DownArrow from "../assets/Down_Arrow.png";
 
 class StartScene extends Phaser.Scene {
   constructor() {
@@ -35,6 +35,8 @@ class StartScene extends Phaser.Scene {
     this.load.image("health-sm", Health_sm);
     this.load.image("grate", Grate);
     this.load.image("heart", Heart);
+    this.load.image("computron", Computron);
+    this.load.image("down-arrow", DownArrow);
   }
 
   create() {

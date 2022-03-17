@@ -13,6 +13,9 @@ export const EventsName = {
   GAMEOVER: "GameOver",
   RESET_PLAYER: "Reset",
   PLAYER_HEALTH_CHANGE: "PlayerHealthChange",
+  CAST_START: "Begin Casting",
+  CAST_END: "Stop Casting",
+  CAST_SELECT: "Object Selected",
 };
 
 export const GameStatus = {
@@ -29,6 +32,7 @@ export const GameParams = {
   VWALL: 5,
   HPMAX: 100,
   HPADD: 10,
+  VCOMP: 50,
 };
 
 export const PlayerState = {
@@ -37,7 +41,6 @@ export const PlayerState = {
   ATTACK: "Attacking",
   WALL: "WallSlide",
   WALLJUMP: "WallJump",
-  SLIDE: "GroundSlide",
   RUN: "Running",
   CAST: "Casting",
   HIT: "Hit",
