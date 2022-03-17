@@ -106,7 +106,6 @@ export const createPlayerAnims = (animationManager) => {
       end: 3,
     }),
     frameRate: 8,
-    repeat: 0,
   });
 
   animationManager.create({

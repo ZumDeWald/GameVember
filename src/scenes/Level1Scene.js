@@ -7,6 +7,9 @@ import { createPlayerAnims } from "../anims/playerAnims.js";
 import { createObjectAnims } from "../anims/objectAnims.js";
 import { sceneEvents } from "../events/EventsCenter";
 import getablesFactory from "../utilities/getablesFactory.js";
+import { generateInputs } from "../utilities/inputListeners.js";
+import Computron from "../classes/Computron.js";
+import CastSelector from "../classes/CastSelector.js";
 
 class Level1Scene extends Phaser.Scene {
   constructor() {
@@ -58,8 +61,8 @@ class Level1Scene extends Phaser.Scene {
   create() {
     this.scene.get("ui-scene").scene.restart();
 
-    // Properties
-    this.jumping = false;
+    // Inputs
+    this.inputs = generateInputs(this);
 
     // Map
     this.level1Map = this.make.tilemap({ key: "Lair" });
@@ -94,7 +97,7 @@ class Level1Scene extends Phaser.Scene {
     createObjectAnims(this.anims);
 
     // Characters
-    this.player = new Player(this, 100, 170);
+    this.player = new Player(this, 100, 170, this.inputs);
     this.player.setSize(16, 28);
     this.player.setOffset(16, 8);
     this.initEnemies();
@@ -131,6 +134,29 @@ class Level1Scene extends Phaser.Scene {
       true
     );
 
+    this.castables = this.physics.add.group([
+      new Computron(this, 150, 170, this.inputs),
+      new Computron(this, 170, 170, this.inputs),
+    ]);
+    sceneEvents.on(
+      EventsName.CAST_START,
+      () => {
+        const castCandidates = this.castables.getChildren().filter((c) => {
+          const diff = Math.Distance.BetweenPoints(
+            { x: c.x, y: c.y },
+            { x: this.player.x, y: this.player.y }
+          );
+          return diff <= 120;
+        });
+        new CastSelector(
+          this,
+          this.inputs,
+          castCandidates
+        ).body.setAllowGravity(false);
+      },
+      this
+    );
+
     this.switch = this.physics.add.sprite(350, 170, "switches", "SwitchOff1");
     this.switch.play("switch_off", true);
     this.switch.activated = false;
@@ -161,6 +187,7 @@ class Level1Scene extends Phaser.Scene {
     this.physics.add.collider(this.player, this.oneWayPlatforms);
     this.physics.add.collider(this.enemies, this.level1Platforms);
     this.physics.add.collider(this.enemies, this.enemies);
+    this.physics.add.collider(this.castables, this.level1Platforms);
     this.physics.add.collider(this.switch, this.level1Platforms);
     this.physics.add.collider(this.player, this.enemies, (obj1, obj2) => {
       obj1.takeHit(8);
@@ -189,6 +216,24 @@ class Level1Scene extends Phaser.Scene {
       0,
       this.level1Map.widthInPixels,
       this.level1Map.heightInPixels
+    );
+
+    sceneEvents.on(
+      EventsName.CAST_SELECT,
+      (target) => {
+        this.cameras.main.startFollow(target, true);
+        this.mini.startFollow(target, true);
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.CAST_END,
+      () => {
+        this.cameras.main.startFollow(this.player, true);
+        this.mini.startFollow(this.player, true);
+      },
+      this
     );
   }
 

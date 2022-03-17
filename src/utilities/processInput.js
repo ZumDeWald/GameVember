@@ -8,11 +8,17 @@ export const processInput = {
     player.body.setVelocityX(0);
     if (player.body.deltaYFinal() > 1) {
       player.settings.state = PlayerState.FALL;
-    } else if (player.inputs.keyL.isDown) {
+    } else if (
+      player.settings.cast &&
+      player.inputs.down.isDown &&
+      player.inputs.jump.isDown
+    ) {
+      player.settings.state = PlayerState.CAST;
+    } else if (player.inputs.atk.isDown) {
       player.settings.state = PlayerState.ATTACK;
-    } else if (player.inputs.keyK.isDown) {
+    } else if (player.inputs.jump.isDown) {
       player.settings.state = PlayerState.JUMP;
-    } else if (player.inputs.keyA.isDown || player.inputs.keyD.isDown) {
+    } else if (player.inputs.left.isDown || player.inputs.right.isDown) {
       player.settings.state = PlayerState.RUN;
     }
   },
@@ -24,7 +30,7 @@ export const processInput = {
     }
     if (player.body.onFloor()) {
       player.settings.state = PlayerState.STAND;
-    } else if (player.inputs.keyL.isDown) {
+    } else if (player.inputs.atk.isDown) {
       player.settings.state = PlayerState.ATTACK;
     } else if (
       player.settings.wallCling &&
@@ -32,10 +38,10 @@ export const processInput = {
       player.body.onWall()
     ) {
       player.settings.state = PlayerState.WALL;
-    } else if (player.inputs.keyA.isDown) {
+    } else if (player.inputs.left.isDown) {
       player.body.setVelocityX(-GameParams.VAIR);
       player.checkFlip();
-    } else if (player.inputs.keyD.isDown) {
+    } else if (player.inputs.right.isDown) {
       player.body.setVelocityX(GameParams.VAIR);
       player.checkFlip();
     }
@@ -68,21 +74,21 @@ export const processInput = {
     if (player.body.onFloor()) {
       player.settings.inputTimeout = 0;
       player.settings.state = PlayerState.STAND;
-    } else if (player.inputs.keyL.isDown) {
+    } else if (player.inputs.atk.isDown) {
       player.settings.inputTimeout = 0;
       player.settings.state = PlayerState.ATTACK;
       player.flipX = !player.flipX;
-    } else if (player.inputs.keyK.isDown && player.settings.inputTimeout > 12) {
+    } else if (player.inputs.jump.isDown && player.settings.inputTimeout > 12) {
       player.settings.inputTimeout = 0;
       player.settings.state = PlayerState.WALLJUMP;
       player.flipX = !player.flipX;
-    } else if (player.inputs.keyA.isDown) {
+    } else if (player.inputs.left.isDown) {
       player.body.setVelocityX(-GameParams.VWALL);
       if (!player.settings.touchingWall) {
         player.settings.inputTimeout = 0;
         player.settings.state = PlayerState.FALL;
       }
-    } else if (player.inputs.keyD.isDown) {
+    } else if (player.inputs.right.isDown) {
       player.body.setVelocityX(GameParams.VWALL);
       if (!player.settings.touchingWall) {
         player.settings.inputTimeout = 0;
@@ -107,31 +113,37 @@ export const processInput = {
 
     if (!player.settings.jumped) {
       player.body.setVelocityY(GameParams.VWJUMP);
-      player.body.setVelocityX(player.inputs.keyA.isDown ? 80 : -80);
+      player.body.setVelocityX(player.inputs.left.isDown ? 80 : -80);
       player.settings.jumped = true;
     }
   },
-  [PlayerState.SLIDE]: (player) => {},
   [PlayerState.RUN]: (player) => {
     player.play("player_run", true);
     player.settings.jumped = false;
     if (player.body.deltaYFinal() > 1) {
       player.settings.state = PlayerState.FALL;
-    } else if (player.inputs.keyL.isDown) {
+    } else if (player.inputs.atk.isDown) {
       player.settings.state = PlayerState.ATTACK;
-    } else if (player.inputs.keyK.isDown) {
+    } else if (player.inputs.jump.isDown) {
       player.settings.state = PlayerState.JUMP;
-    } else if (player.inputs.keyA.isDown) {
+    } else if (player.inputs.left.isDown) {
       player.body.setVelocityX(-GameParams.VRUN);
       player.checkFlip();
-    } else if (player.inputs.keyD.isDown) {
+    } else if (player.inputs.right.isDown) {
       player.body.setVelocityX(GameParams.VRUN);
       player.checkFlip();
     } else {
       player.settings.state = PlayerState.STAND;
     }
   },
-  [PlayerState.CAST]: (player) => {},
+  [PlayerState.CAST]: (player) => {
+    if (player.settings.inputTimeout === 0) {
+      player.play("player_cast");
+      player.anims.nextAnim = "player_cast_loop";
+      player.settings.inputTimeout = 1;
+      sceneEvents.emit(EventsName.CAST_START);
+    }
+  },
   [PlayerState.HIT]: (player) => {
     player.play("player_fall", true);
     if (player.settings.hitCounter === 1) {
@@ -146,7 +158,7 @@ export const processInput = {
     player.play("player_fall", true);
     if (player.body.onFloor()) {
       player.settings.state = PlayerState.STAND;
-    } else if (player.inputs.keyL.isDown) {
+    } else if (player.inputs.atk.isDown) {
       player.settings.state = PlayerState.ATTACK;
     } else if (
       player.settings.wallCling &&
@@ -154,10 +166,10 @@ export const processInput = {
       player.body.onWall()
     ) {
       player.settings.state = PlayerState.WALL;
-    } else if (player.inputs.keyA.isDown) {
+    } else if (player.inputs.left.isDown) {
       player.body.setVelocityX(-GameParams.VAIR);
       player.checkFlip();
-    } else if (player.inputs.keyD.isDown) {
+    } else if (player.inputs.right.isDown) {
       player.body.setVelocityX(GameParams.VAIR);
       player.checkFlip();
     }
