@@ -12,9 +12,10 @@ export default class Computron extends Physics.Arcade.Image {
       occupied: false,
       inputTimeout: 0,
     };
-
     scene.add.existing(this);
     scene.physics.add.existing(this);
+    this.body.setCollideWorldBounds(true);
+    this.setDepth(-1);
   }
 
   showCastable() {

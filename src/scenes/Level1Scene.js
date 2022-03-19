@@ -89,8 +89,6 @@ class Level1Scene extends Phaser.Scene {
 
     this.level1Map.createLayer("foreground", GBs2, 0, 0).setDepth(1);
 
-    this.cursors = this.input.keyboard.createCursorKeys();
-
     // Anims
     createEnemyAnims(this.anims);
     createPlayerAnims(this.anims);
@@ -135,9 +133,10 @@ class Level1Scene extends Phaser.Scene {
     );
 
     this.castables = this.physics.add.group([
-      new Computron(this, 150, 170, this.inputs),
-      new Computron(this, 170, 170, this.inputs),
+      new Computron(this, 570, 120, this.inputs),
+      new Computron(this, 700, 150, this.inputs),
     ]);
+
     sceneEvents.on(
       EventsName.CAST_START,
       () => {
@@ -221,7 +220,18 @@ class Level1Scene extends Phaser.Scene {
     sceneEvents.on(
       EventsName.CAST_SELECT,
       (target) => {
-        this.cameras.main.startFollow(target, true);
+        this.cameras.main.pan(
+          target.x,
+          target.y,
+          300,
+          Phaser.Math.Easing.Cubic.easeInOut,
+          true,
+          null,
+          this
+        );
+        this.time.delayedCall(300, () => {
+          this.cameras.main.startFollow(target, true);
+        });
         this.mini.startFollow(target, true);
       },
       this
@@ -230,7 +240,18 @@ class Level1Scene extends Phaser.Scene {
     sceneEvents.on(
       EventsName.CAST_END,
       () => {
-        this.cameras.main.startFollow(this.player, true);
+        this.cameras.main.pan(
+          this.player.x,
+          this.player.y,
+          300,
+          Phaser.Math.Easing.Cubic.easeInOut,
+          true,
+          null,
+          this
+        );
+        this.time.delayedCall(300, () => {
+          this.cameras.main.startFollow(this.player, true);
+        });
         this.mini.startFollow(this.player, true);
       },
       this
