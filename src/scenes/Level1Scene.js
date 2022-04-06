@@ -61,6 +61,22 @@ class Level1Scene extends Phaser.Scene {
   create() {
     this.scene.get("ui-scene").scene.restart();
 
+    sceneEvents.on(
+      EventsName.PAUSE_GAME,
+      () => {
+        this.scene.pause("playGame");
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.RESUME_GAME,
+      () => {
+        this.scene.resume("playGame");
+      },
+      this
+    );
+
     // Inputs
     this.inputs = generateInputs(this);
 
@@ -133,8 +149,8 @@ class Level1Scene extends Phaser.Scene {
     );
 
     this.castables = this.physics.add.group([
-      new Computron(this, 570, 120, this.inputs),
-      new Computron(this, 700, 150, this.inputs),
+      new Computron(this, 570, 108, this.inputs, this.player, "c1"),
+      new Computron(this, 700, 164, this.inputs, this.player, "c1"),
     ]);
 
     sceneEvents.on(

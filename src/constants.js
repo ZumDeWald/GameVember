@@ -15,7 +15,10 @@ export const EventsName = {
   PLAYER_HEALTH_CHANGE: "PlayerHealthChange",
   CAST_START: "Begin Casting",
   CAST_END: "Stop Casting",
-  CAST_SELECT: "Object Selected",
+  CAST_SELECT: "ObjectSelected",
+  OPEN_DIALOG: "OpenDialog",
+  PAUSE_GAME: "Pause",
+  RESUME_GAME: "UnPause",
 };
 
 export const GameStatus = {
@@ -46,4 +49,9 @@ export const PlayerState = {
   HIT: "Hit",
   DED: "Died",
   FALL: "Falling",
+};
+
+export const DialogSettings = {
+  PLAYER: "Player",
+  COMPUTRON: "Computron",
 };
