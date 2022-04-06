@@ -1,21 +1,21 @@
-import { GameObjects, Scene } from "phaser";
-import { Score } from "../classes/Score.js";
-import { EventsName, GameStatus, ScoreOperations } from "../constants.js";
+import { Scene } from "phaser";
+import { EventsName, GameStatus } from "../constants.js";
 import { CustomText } from "../classes/CustomText.js";
 import { GameParams } from "../constants.js";
 import { sceneEvents } from "../events/EventsCenter.js";
+import DialogBox from "../classes/DialogBox.js";
+import PauseScreen from "../classes/PauseScreen.js";
+import { generateInputs } from "../utilities/inputListeners.js";
 
 class UIScene extends Scene {
   constructor() {
     super("ui-scene");
-    // this.score;
 
-    // this.scorePoints = (points) => {
-    //   this.score.changeValue(ScoreOperations.INCREASE, points);
-    //   // if (this.score.getValue() >= GameParams.winScore) {
-    //   //   sceneEvents.emit(EventsName.GAMEOVER, GameStatus.WIN);
-    //   // }
-    // };
+    this.settings = {
+      gamePaused: false,
+      inputTimeout: 0,
+      dialogOpen: false,
+    };
 
     this.gameEndHandler = (status) => {
       this.cameras.main.setBackgroundColor("rgba(0,0,0,0.6)");
@@ -47,30 +47,33 @@ class UIScene extends Scene {
         this
       );
     };
+
+    sceneEvents.on(
+      EventsName.OPEN_DIALOG,
+      () => {
+        this.settings.dialogOpen = true;
+        this.settings.gamePaused = true;
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.RESUME_GAME,
+      () => {
+        this.settings.dialogOpen = false;
+        this.settings.gamePaused = false;
+      },
+      this
+    );
   }
 
   create() {
-    // this.score = new Score(this, 10, 40, 0);
-
     this.miniMapBorder = this.add.rectangle(650, 20, 120, 100, 0x000000, 0);
     this.miniMapBorder.setOrigin(0);
     this.miniMapBorder.setStrokeStyle(2, 0x000000, 1);
 
+    this.inputs = generateInputs(this);
     this.initListeners();
-
-    // this.health = this.add.group({
-    //   classType: Phaser.GameObjects.Image,
-    // });
-
-    // this.health.createMultiple({
-    //   key: "health-lg",
-    //   setXY: {
-    //     x: 30,
-    //     y: 20,
-    //     stepX: 36,
-    //   },
-    //   quantity: 3,
-    // });
 
     this.healthIcon = this.add.image(28, 27, "heart");
 
@@ -94,6 +97,9 @@ class UIScene extends Scene {
     );
     this.healthBarBorder.setStrokeStyle(2, 0x000, 0.9);
     this.healthBarBorder.setOrigin(0, 0);
+
+    this.dialog = new DialogBox(this, this.inputs);
+    this.pauseScreen = new PauseScreen(this, this.inputs);
   }
 
   initListeners() {

@@ -1,17 +1,31 @@
-import { Physics } from "phaser";
+import { Physics, Math } from "phaser";
 import { GameParams } from "../constants";
 import { EventsName } from "../constants.js";
 import { sceneEvents } from "../events/EventsCenter.js";
+import { getConversation } from "../dialog.js";
 
 export default class Computron extends Physics.Arcade.Image {
-  constructor(scene, x, y, inputsFromScene) {
+  constructor(scene, x, y, inputsFromScene, target, conversationId) {
     super(scene, x, y, "computron");
 
     this.inputs = inputsFromScene;
+    this.target = target;
+
     this.settings = {
       occupied: false,
       inputTimeout: 0,
+      conversationTriggered: false,
+      conversation: getConversation(conversationId),
     };
+
+    this.openDialogIndicator = this.scene.add.image(
+      this.x,
+      this.y - 25,
+      "up-indicator"
+    );
+    this.openDialogIndicator.setScale(0.8);
+    this.openDialogIndicator.setDepth(-1);
+
     scene.add.existing(this);
     scene.physics.add.existing(this);
     this.body.setCollideWorldBounds(true);
@@ -36,6 +50,23 @@ export default class Computron extends Physics.Arcade.Image {
   setOccupied(status) {
     this.settings.occupied = status;
     this.body.setAllowGravity(!status);
+  }
+
+  showIfPlayerClose() {
+    const diff = Math.Distance.BetweenPoints(
+      { x: this.x, y: this.y },
+      { x: this.target.x, y: this.target.y }
+    );
+    if (diff < 50) {
+      this.openDialogIndicator.setVisible(true);
+      if (this.inputs.up.isDown) {
+        this.settings.conversationTriggered = true;
+        sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.conversation);
+        sceneEvents.emit(EventsName.PAUSE_GAME);
+      }
+    } else {
+      this.openDialogIndicator.setVisible(false);
+    }
   }
 
   controlComputron() {
@@ -74,5 +105,6 @@ export default class Computron extends Physics.Arcade.Image {
 
   preUpdate() {
     if (this.settings.occupied) this.controlComputron();
+    if (!this.settings.conversationTriggered) this.showIfPlayerClose();
   }
 }

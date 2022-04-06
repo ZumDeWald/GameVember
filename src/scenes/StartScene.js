@@ -17,6 +17,7 @@ import Grate from "../assets/GrateNoEnds.png";
 import Heart from "../assets/heart_full.png";
 import Computron from "../assets/Computron.png";
 import DownArrow from "../assets/Down_Arrow.png";
+import UpIndicator from "../assets/UpIndicator.png";
 
 class StartScene extends Phaser.Scene {
   constructor() {
@@ -37,6 +38,7 @@ class StartScene extends Phaser.Scene {
     this.load.image("heart", Heart);
     this.load.image("computron", Computron);
     this.load.image("down-arrow", DownArrow);
+    this.load.image("up-indicator", UpIndicator);
   }
 
   create() {
