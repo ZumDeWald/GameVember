@@ -122,6 +122,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
   handleCloseDialog() {
     this.setVisible(false);
     this.settings.dialogActive = false;
+    this.settings.conversationPosition = 0;
     this.text.text = "";
     if (this.animationSequence) this.animationSequence.remove();
     sceneEvents.emit(EventsName.RESUME_GAME);

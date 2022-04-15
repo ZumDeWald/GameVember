@@ -5,6 +5,7 @@ import { GameParams } from "../constants.js";
 import { sceneEvents } from "../events/EventsCenter.js";
 import DialogBox from "../classes/DialogBox.js";
 import PauseScreen from "../classes/PauseScreen.js";
+import InfoCenter from "../classes/InfoCenter.js";
 import { generateInputs } from "../utilities/inputListeners.js";
 
 class UIScene extends Scene {
@@ -100,6 +101,7 @@ class UIScene extends Scene {
 
     this.dialog = new DialogBox(this, this.inputs);
     this.pauseScreen = new PauseScreen(this, this.inputs);
+    this.infoCenter = new InfoCenter(this, this.inputs);
   }
 
   initListeners() {

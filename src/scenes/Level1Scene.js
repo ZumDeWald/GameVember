@@ -84,7 +84,12 @@ class Level1Scene extends Phaser.Scene {
     this.level1Map = this.make.tilemap({ key: "Lair" });
     const GBs2 = this.level1Map.addTilesetImage("GBs2");
     this.level1Map.createLayer("background", GBs2, 0, 0);
-    this.physics.world.setBounds(0, 0, 1280, 640);
+    this.physics.world.setBounds(
+      0,
+      0,
+      this.level1Map.widthInPixels,
+      this.level1Map.heightInPixels
+    );
 
     this.level1Platforms = this.level1Map.createLayer("platforms", GBs2, 0, 0);
     this.level1Platforms.setCollisionByExclusion(-1, true, false);
@@ -149,7 +154,7 @@ class Level1Scene extends Phaser.Scene {
     );
 
     this.castables = this.physics.add.group([
-      new Computron(this, 570, 108, this.inputs, this.player, "c1"),
+      new Computron(this, 570, 108, this.inputs, this.player, "c2"),
       new Computron(this, 700, 164, this.inputs, this.player, "c1"),
     ]);
 
@@ -218,7 +223,7 @@ class Level1Scene extends Phaser.Scene {
     );
     this.cameras.main.startFollow(this.player, true);
     this.cameras.main.setZoom(1.8);
-    this.cameras.main.setDeadzone(175, 120);
+    this.cameras.main.setDeadzone(175, 80);
     this.cameras.main.fadeIn(200, 0, 0, 0);
 
     this.mini = this.cameras.add(650, 20, 120, 100, false, "mini");
