@@ -84,7 +84,7 @@ export default class Computron extends Physics.Arcade.Image {
   }
 
   preUpdate() {
-    if (this.inputs.space.isDown) sceneEvents.emit(EventsName.CAST_END, false);
+    if (this.inputs.jump.isDown) sceneEvents.emit(EventsName.CAST_END, false);
     if (!this.settings.visible) return;
 
     if (!this.settings.ignoreInput) {

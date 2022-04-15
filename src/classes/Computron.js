@@ -16,6 +16,7 @@ export default class Computron extends Physics.Arcade.Image {
       inputTimeout: 0,
       conversationTriggered: false,
       conversation: getConversation(conversationId),
+      castActive: false,
     };
 
     this.openDialogIndicator = this.scene.add.image(
@@ -25,6 +26,15 @@ export default class Computron extends Physics.Arcade.Image {
     );
     this.openDialogIndicator.setScale(0.8);
     this.openDialogIndicator.setDepth(-1);
+
+    sceneEvents.on(EventsName.CAST_START, () => {
+      this.settings.castActive = true;
+      this.openDialogIndicator.setVisible(false);
+    });
+
+    sceneEvents.on(EventsName.CAST_END, () => {
+      this.settings.castActive = false;
+    });
 
     scene.add.existing(this);
     scene.physics.add.existing(this);
@@ -58,11 +68,13 @@ export default class Computron extends Physics.Arcade.Image {
       { x: this.target.x, y: this.target.y }
     );
     if (diff < 50) {
+      this.openDialogIndicator.setPosition(this.x, this.y - 25);
       this.openDialogIndicator.setVisible(true);
       if (this.inputs.up.isDown) {
         this.settings.conversationTriggered = true;
         sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.conversation);
         sceneEvents.emit(EventsName.PAUSE_GAME);
+        this.openDialogIndicator.setVisible(false);
       }
     } else {
       this.openDialogIndicator.setVisible(false);
@@ -82,10 +94,6 @@ export default class Computron extends Physics.Arcade.Image {
       this.body.setVelocity(0);
     }
 
-    if (this.inputs.jump.isDown) {
-      this.settings.inputTimeout += 1;
-    }
-
     if (this.settings.inputTimeout > 0) {
       if (this.settings.inputTimeout === 1) this.angle += 90;
       if (this.settings.inputTimeout >= 15) {
@@ -95,16 +103,20 @@ export default class Computron extends Physics.Arcade.Image {
       }
     }
 
-    if (this.inputs.space.isDown) {
+    if (this.inputs.down.isDown && this.inputs.jump.isDown) {
       this.setOccupied(false);
       this.scene.time.delayedCall(300, () => {
         sceneEvents.emit(EventsName.CAST_END);
       });
+    } else if (this.inputs.jump.isDown) {
+      this.settings.inputTimeout += 1;
     }
   }
 
   preUpdate() {
     if (this.settings.occupied) this.controlComputron();
-    if (!this.settings.conversationTriggered) this.showIfPlayerClose();
+    if (!this.settings.conversationTriggered && !this.settings.castActive) {
+      this.showIfPlayerClose();
+    }
   }
 }

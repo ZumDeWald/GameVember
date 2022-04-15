@@ -7,8 +7,8 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.inputs = inputsFromScene;
 
     this.settings = {
-      boxTop: 50,
-      boxLeft: 50,
+      boxTop: 25,
+      boxLeft: 25,
       inputTimeout: 0,
       paused: false,
       dialogOpen: false,
@@ -16,29 +16,28 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
 
     // Main box
     this.backingBox = this.scene.add.graphics();
-    this.backingBox.fillStyle(0x333333);
+    this.backingBox.fillStyle(0x000000);
     this.backingBox.fillRoundedRect(
       this.settings.boxLeft + 1,
       this.settings.boxTop + 1,
-      699,
-      499,
+      749,
+      549,
       8
     );
-    this.backingBox.lineStyle(3, 0xffffff);
+    this.backingBox.lineStyle(5, 0xeeeeee);
     this.backingBox.strokeRoundedRect(
       this.settings.boxLeft,
       this.settings.boxTop,
-      700,
-      500,
+      750,
+      550,
       8
     );
-    this.backingBox.setDepth(10);
     this.add(this.backingBox);
 
     this.header = this.scene.add.text(
       100,
       this.settings.boxTop + 15,
-      `<]||--  PAUSE  --||[>`
+      `--]||-  PAUSE  -||[--`
     );
     this.header.setDepth(11);
     this.add(this.header);
@@ -47,22 +46,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       this.settings.boxTop + 40
     );
 
-    this.text = this.scene.add.text(
-      50,
-      this.settings.boxTop + 100,
-      `
-        Here's some info on how to play.
-        
-        Here's more info.`,
-      {
-        wordWrap: {
-          width: 500,
-        },
-      }
-    );
-    this.text.setDepth(11);
-    this.add(this.text);
-
+    this.setDepth(10);
     this.scene.add.existing(this);
     this.setVisible(false);
 
@@ -78,6 +62,45 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       EventsName.RESUME_GAME,
       () => {
         this.settings.dialogOpen = false;
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.GET_CLING,
+      () => {
+        this.clingInfo = this.scene.add.text(
+          10,
+          this.settings.boxTop + 100,
+          `
+      -| Wall Cling |- 
+
+          > Here you can cling to and jump from walls allowing even more 
+          versitility in traversal than you knew previously.`
+        );
+        this.clingInfo.setDepth(11);
+        this.clingInfo.setVisible(false);
+        this.add(this.clingInfo);
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.GET_TELE,
+      () => {
+        this.castInfo = this.scene.add.text(
+          10,
+          this.settings.boxTop + 230,
+          `
+      -| Cast |- 
+
+          > In this reality you are able to cast your kenetic consciousness
+          into those inanimate objects open to receiving it and manipulate 
+          their position.`
+        );
+        this.castInfo.setDepth(11);
+        this.castInfo.setVisible(false);
+        this.add(this.castInfo);
       },
       this
     );
