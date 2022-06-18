@@ -19,17 +19,21 @@ export default class Computron extends Physics.Arcade.Image {
       castActive: false,
     };
 
-    this.openDialogIndicator = this.scene.add.image(
+    this.computronOutline = this.scene.add.image(
       this.x,
-      this.y - 25,
-      "up-indicator"
+      this.y,
+      "computron-outline"
     );
-    this.openDialogIndicator.setScale(0.8);
-    this.openDialogIndicator.setDepth(-1);
+    this.computronOutline.setDepth(-1);
+
+    this.checkBubble = this.scene.add.image(this.x, this.y, "arrow-up");
+    this.checkBubble.setScale(0.6);
+    this.checkBubble.setDepth(-1);
 
     sceneEvents.on(EventsName.CAST_START, () => {
       this.settings.castActive = true;
-      this.openDialogIndicator.setVisible(false);
+      this.computronOutline.setVisible(false);
+      this.checkBubble.setVisible(false);
     });
 
     sceneEvents.on(EventsName.CAST_END, () => {
@@ -67,17 +71,23 @@ export default class Computron extends Physics.Arcade.Image {
       { x: this.x, y: this.y },
       { x: this.target.x, y: this.target.y }
     );
-    if (diff < 50) {
-      this.openDialogIndicator.setPosition(this.x, this.y - 25);
-      this.openDialogIndicator.setVisible(true);
+    if (diff < 30) {
+      this.computronOutline.setPosition(this.x, this.y);
+      this.computronOutline.setVisible(true);
+
+      this.checkBubble.setPosition(this.x, this.y - 24);
+      this.checkBubble.setVisible(true);
+
       if (this.inputs.up.isDown) {
         this.settings.conversationTriggered = true;
         sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.conversation);
         sceneEvents.emit(EventsName.PAUSE_GAME);
-        this.openDialogIndicator.setVisible(false);
+        this.computronOutline.setVisible(false);
+        this.checkBubble.setVisible(false);
       }
     } else {
-      this.openDialogIndicator.setVisible(false);
+      this.computronOutline.setVisible(false);
+      this.checkBubble.setVisible(false);
     }
   }
 

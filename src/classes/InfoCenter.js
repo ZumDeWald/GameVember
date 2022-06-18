@@ -12,18 +12,18 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
       inputTimeout: 0,
       collectedPowerUps: [],
       controlsWithCast: ` 
-⬅️ A   ⬆️ W   ➡️ D    ✨ S + K
+⬅️ A   ⬆️ W   ➡️ D   ✨ S + K
       
 🆙 K   🗡 L   ⏸ SPACE`,
     };
 
     // Main box
     this.backingBox = this.scene.add.graphics();
-    this.backingBox.fillStyle(0x181c34);
+    this.backingBox.fillStyle(0x000000);
     this.backingBox.fillRoundedRect(
       this.settings.boxLeft + 1,
       this.settings.boxTop + 1,
-      749,
+      324,
       79,
       8
     );
@@ -31,7 +31,7 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.backingBox.strokeRoundedRect(
       this.settings.boxLeft,
       this.settings.boxTop,
-      750,
+      325,
       80,
       8
     );
@@ -39,9 +39,9 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
 
     // Controls
     this.controlsTut = this.scene.add.text(
-      this.settings.boxLeft + 25,
+      this.settings.boxLeft + 15,
       this.settings.boxTop,
-      ` 
+      `
 ⬅️ A   ⬆️ W   ➡️ D
 
 🆙 K   🗡 L   ⏸ SPACE`
@@ -52,18 +52,18 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.healthPowerUpsBox = this.scene.add.graphics();
     this.healthPowerUpsBox.fillStyle(0x000000);
     this.healthPowerUpsBox.fillRoundedRect(
-      this.settings.boxLeft + 441,
-      this.settings.boxTop + 9,
-      134,
-      34,
+      this.settings.boxLeft + 593,
+      this.settings.boxTop - 24,
+      147,
+      105,
       8
     );
     this.healthPowerUpsBox.lineStyle(2, 0x545976);
     this.healthPowerUpsBox.strokeRoundedRect(
-      this.settings.boxLeft + 440,
-      this.settings.boxTop + 8,
-      135,
-      35,
+      this.settings.boxLeft + 592,
+      this.settings.boxTop - 25,
+      148,
+      106,
       8
     );
     this.add(this.healthPowerUpsBox);
@@ -76,9 +76,9 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
       key: "potions",
       frame: "potion_red",
       setXY: {
-        x: this.settings.boxLeft + 460,
-        y: this.settings.boxTop + 26,
-        stepX: 24,
+        x: this.settings.boxLeft + 616,
+        y: this.settings.boxTop - 10,
+        stepX: 25,
       },
       quantity: 5,
       setScale: { x: 1.8, y: 1.8 },
@@ -92,23 +92,23 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.powerUpsBox.fillStyle(0x000000);
     this.powerUpsBox.fillRoundedRect(
       this.settings.boxLeft + 586,
-      this.settings.boxTop + 9,
-      157,
-      64,
+      this.settings.boxTop + 6,
+      161,
+      75,
       8
     );
     this.powerUpsBox.lineStyle(2, 0x545976);
     this.powerUpsBox.strokeRoundedRect(
       this.settings.boxLeft + 585,
-      this.settings.boxTop + 8,
-      158,
-      65,
+      this.settings.boxTop + 5,
+      162,
+      76,
       8
     );
     this.add(this.powerUpsBox);
 
     this.clingIcon = this.scene.add.image(
-      this.settings.boxLeft + 606,
+      this.settings.boxLeft + 605,
       this.settings.boxTop + 28,
       "potions",
       "potion_purple"
@@ -118,8 +118,8 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.add(this.clingIcon);
 
     this.castIcon = this.scene.add.image(
-      this.settings.boxLeft + 606,
-      this.settings.boxTop + 55,
+      this.settings.boxLeft + 605,
+      this.settings.boxTop + 56,
       "potions",
       "potion_white"
     );
@@ -128,9 +128,9 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.add(this.castIcon);
 
     this.clingName = this.scene.add.text(
-      this.settings.boxLeft + 620,
-      this.settings.boxTop + 21,
-      `- ???`,
+      this.settings.boxLeft + 619,
+      this.settings.boxTop + 20,
+      `-   ???`,
       {
         color: "#ddd",
       }
@@ -138,9 +138,9 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.add(this.clingName);
 
     this.castName = this.scene.add.text(
-      this.settings.boxLeft + 620,
+      this.settings.boxLeft + 619,
       this.settings.boxTop + 48,
-      `- ???`,
+      `-   ???`,
       {
         color: "#ddd",
       }
@@ -246,7 +246,7 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.scene.tweens.add({
       targets: [this.controlsTut],
       duration: 100,
-      repeat: 2,
+      repeat: 1,
       repeatDelay: 50,
       yoyo: true,
       alpha: 0.3,
@@ -260,7 +260,7 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.scene.tweens.add({
       targets: [icon],
       duration: 100,
-      repeat: 2,
+      repeat: 1,
       repeatDelay: 50,
       yoyo: true,
       alpha: 0.3,

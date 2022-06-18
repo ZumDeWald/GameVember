@@ -15,6 +15,11 @@ const conversations = {
       endOfConvo: false,
     },
     {
+      content: "[ END OF WELCOME SCRIPT ]",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
       content: "Some nice vintage computrons in this place ...",
       speaker: DialogSettings.PLAYER,
       endOfConvo: false,
@@ -23,11 +28,6 @@ const conversations = {
       content:
         "Maybe one of them has a map or something to help me get out of here.",
       speaker: DialogSettings.PLAYER,
-      endOfConvo: false,
-    },
-    {
-      content: "[ END OF WELCOME SCRIPT ]",
-      speaker: DialogSettings.COMPUTRON,
       endOfConvo: true,
     },
   ],

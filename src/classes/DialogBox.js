@@ -66,7 +66,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
         text: "",
         style: {
           wordWrap: {
-            width: 500,
+            width: 490,
           },
         },
       },
@@ -74,6 +74,17 @@ export default class DialogBox extends Phaser.GameObjects.Group {
     );
     this.text.setDepth(11);
     this.add(this.text);
+
+    this.next = this.scene.make.text(
+      {
+        x: this.settings.boxLeft + 640,
+        y: this.settings.boxTop + 120,
+        text: `L ➡️`,
+      },
+      true
+    );
+    this.next.setDepth(11);
+    this.add(this.next);
 
     this.scene.add.existing(this);
 
@@ -83,6 +94,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
         this.text.text = "";
         this.conversation = conversation;
         this.setVisible(true);
+        this.next.setVisible(false);
         this.settings.dialogActive = true;
         this.addText(conversation[0].content);
       },
@@ -94,14 +106,15 @@ export default class DialogBox extends Phaser.GameObjects.Group {
 
   addText(newText) {
     this.settings.animationCounter = 0;
-    this.dialog = newText.split(" ");
+    this.dialog = newText.split("");
     this.dialogLength = this.dialog.length;
     if (this.animationSequence) this.animationSequence.remove();
 
     this.text.setText("");
+    this.next.setVisible(false);
 
     this.animationSequence = this.scene.time.addEvent({
-      delay: 45,
+      delay: 12,
       callback: this.animateText,
       callbackScope: this,
       loop: true,
@@ -110,16 +123,25 @@ export default class DialogBox extends Phaser.GameObjects.Group {
 
   animateText() {
     this.text.setText(
-      this.text.text + this.dialog[this.settings.animationCounter] + " "
+      this.text.text + this.dialog[this.settings.animationCounter]
     );
     this.settings.animationCounter += 1;
     if (this.settings.animationCounter >= this.dialogLength) {
       this.animationSequence.remove();
-      this.settings.inputTimeout = 0;
+      this.scene.time.delayedCall(
+        400,
+        () => {
+          this.settings.inputTimeout = 0;
+          this.next.setVisible(true);
+        },
+        null,
+        this.scene
+      );
     }
   }
 
   handleCloseDialog() {
+    this.next.setVisible(false);
     this.setVisible(false);
     this.settings.dialogActive = false;
     this.settings.conversationPosition = 0;
@@ -129,6 +151,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
   }
 
   handleNextDialog() {
+    this.next.setVisible(false);
     if (this.conversation[this.settings.conversationPosition].endOfConvo) {
       this.handleCloseDialog();
       return;

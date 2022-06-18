@@ -39,16 +39,16 @@ export const GameParams = {
 };
 
 export const PlayerState = {
-  STAND: "Standing",
-  JUMP: "Jumping",
-  ATTACK: "Attacking",
-  WALL: "WallSlide",
-  WALLJUMP: "WallJump",
-  RUN: "Running",
-  CAST: "Casting",
-  HIT: "Hit",
-  DED: "Died",
-  FALL: "Falling",
+  STAND: "player_idle",
+  JUMP: "player_jump",
+  ATTACK: "player_atk",
+  WALL: "player_wall_slide",
+  WALLJUMP: "player_wall_jump",
+  RUN: "player_run",
+  CAST: "player_cast",
+  HIT: "player_hit",
+  DED: "player_die",
+  FALL: "player_fall",
 };
 
 export const DialogSettings = {

@@ -5,7 +5,7 @@ import UIScene from "./scenes/UIScene.js";
 
 const config = {
   type: Phaser.AUTO,
-  parent: "phaser-example",
+  parent: "game-canvas",
   width: 800,
   height: 600,
   backgroundColor: "#1C293C",
@@ -14,13 +14,16 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 600 },
+      gravity: { y: 700 },
       debug: false, // SET FALSE BEFORE DEPLOY //
     },
   },
   render: {
     antialiasGL: false,
     pixelArt: true,
+  },
+  input: {
+    gamepad: true,
   },
 };
 
