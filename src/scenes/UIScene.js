@@ -7,6 +7,7 @@ import DialogBox from "../classes/DialogBox.js";
 import PauseScreen from "../classes/PauseScreen.js";
 import InfoCenter from "../classes/InfoCenter.js";
 import { generateInputs } from "../utilities/inputListeners.js";
+import DimensionTraversal from "./DimensionTraversal.js";
 
 class UIScene extends Scene {
   constructor() {
@@ -66,6 +67,28 @@ class UIScene extends Scene {
       },
       this
     );
+
+    sceneEvents.on(
+      EventsName.GET_CLING,
+      (i, p) => {
+        this.scene.pause("playGame");
+        this.scene.add("traverse", DimensionTraversal, true, {
+          player: p,
+        });
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.GET_TELE,
+      (i, p) => {
+        this.scene.pause("playGame");
+        this.scene.add("traverse", DimensionTraversal, true, {
+          player: p,
+        });
+      },
+      this
+    );
   }
 
   create() {
@@ -96,7 +119,7 @@ class UIScene extends Scene {
       0xd04835,
       0
     );
-    this.healthBarBorder.setStrokeStyle(2, 0x000, 0.9);
+    this.healthBarBorder.setStrokeStyle(2, 0x000);
     this.healthBarBorder.setOrigin(0, 0);
 
     this.dialog = new DialogBox(this, this.inputs);

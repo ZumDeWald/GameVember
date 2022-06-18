@@ -21,7 +21,7 @@ const getablesFactory = (
 
   items.forEach((item, index) => {
     scene.physics.add.overlap(scene.player, item, (obj1, obj2) => {
-      sceneEvents.emit(eventName, index);
+      sceneEvents.emit(eventName, index, obj1);
       obj2.destroy();
     });
     scene.physics.add.collider(item, scene.level1Platforms);

@@ -10,6 +10,8 @@ import getablesFactory from "../utilities/getablesFactory.js";
 import { generateInputs } from "../utilities/inputListeners.js";
 import Computron from "../classes/Computron.js";
 import CastSelector from "../classes/CastSelector.js";
+import Switch from "../classes/Switch.js";
+import DimensionTraversal from "./DimensionTraversal.js";
 
 class Level1Scene extends Phaser.Scene {
   constructor() {
@@ -35,27 +37,6 @@ class Level1Scene extends Phaser.Scene {
     this.enemies = enemyPoints.map((enemyPoint) => {
       return enemies.get(enemyPoint.x, enemyPoint.y, "bat", "Bat_Fly1");
     });
-  }
-
-  moveGrate(grate) {
-    grate.setVelocityY(-50);
-    this.time.delayedCall(750, () => {
-      grate.setVelocityY(0);
-      grate.destroy();
-    });
-  }
-
-  activateSwitch(theSwitch, player, grate) {
-    if (theSwitch.activated) return;
-    const diff = Math.Distance.BetweenPoints(
-      { x: theSwitch.x, y: theSwitch.y },
-      { x: player.x, y: player.y }
-    );
-    if (diff < 25) {
-      theSwitch.play("switch_on");
-      this.moveGrate(grate);
-      theSwitch.activated = true;
-    }
   }
 
   create() {
@@ -116,7 +97,7 @@ class Level1Scene extends Phaser.Scene {
     createObjectAnims(this.anims);
 
     // Characters
-    this.player = new Player(this, 100, 170, this.inputs);
+    this.player = new Player(this, 100, 158, this.inputs);
     this.player.setSize(16, 28);
     this.player.setOffset(16, 8);
     this.initEnemies();
@@ -156,6 +137,9 @@ class Level1Scene extends Phaser.Scene {
     this.castables = this.physics.add.group([
       new Computron(this, 570, 108, this.inputs, this.player, "c2"),
       new Computron(this, 700, 164, this.inputs, this.player, "c1"),
+      new Computron(this, 112, 468, this.inputs, this.player, "c1"),
+      new Computron(this, 688, 608, this.inputs, this.player, "c1"),
+      new Computron(this, 1136, 608, this.inputs, this.player, "c1"),
     ]);
 
     sceneEvents.on(
@@ -177,21 +161,9 @@ class Level1Scene extends Phaser.Scene {
       this
     );
 
-    this.switch = this.physics.add.sprite(350, 170, "switches", "SwitchOff1");
-    this.switch.play("switch_off", true);
-    this.switch.activated = false;
-    this.switch.setDepth(-1);
-    sceneEvents.on(
-      EventsName.ATTACK,
-      () => {
-        this.activateSwitch(this.switch, this.player, this.grate);
-      },
-      this
-    );
-
-    this.grate = this.physics.add.image(404, 156, "grate");
-    this.grate.body.setAllowGravity(false);
-    this.grate.setImmovable(true);
+    this.switchSet1 = new Switch(this, 350, 170, 404, 156);
+    this.switchSet2 = new Switch(this, 816, 264, 948, 348);
+    this.switchSet3 = new Switch(this, 192, 528, 468, 592);
 
     // Interactions
     this.physics.add.collider(
@@ -203,12 +175,10 @@ class Level1Scene extends Phaser.Scene {
       null,
       this
     );
-    this.physics.add.collider(this.player, this.grate);
     this.physics.add.collider(this.player, this.oneWayPlatforms);
     this.physics.add.collider(this.enemies, this.level1Platforms);
     this.physics.add.collider(this.enemies, this.enemies);
     this.physics.add.collider(this.castables, this.level1Platforms);
-    this.physics.add.collider(this.switch, this.level1Platforms);
     this.physics.add.collider(this.player, this.enemies, (obj1, obj2) => {
       obj1.takeHit(8);
       obj2.takeHit(0);
@@ -277,6 +247,26 @@ class Level1Scene extends Phaser.Scene {
       },
       this
     );
+
+    // this.time.delayedCall(
+    //   1000,
+    //   () => {
+    //     this.scene.add("traverse", DimensionTraversal, true, {
+    //       player: this.player,
+    //     });
+    //   },
+    //   null,
+    //   this
+    // );
+
+    // this.time.delayedCall(
+    //   3000,
+    //   () => {
+    //     this.scene.remove("traverse");
+    //   },
+    //   null,
+    //   this
+    // );
   }
 
   update() {
