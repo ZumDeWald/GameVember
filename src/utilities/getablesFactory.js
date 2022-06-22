@@ -21,7 +21,7 @@ const getablesFactory = (
 
   items.forEach((item, index) => {
     scene.physics.add.overlap(scene.player, item, (obj1, obj2) => {
-      sceneEvents.emit(eventName, index, obj1);
+      sceneEvents.emit(eventName, index, obj1, scene.cameras.main);
       obj2.destroy();
     });
     scene.physics.add.collider(item, scene.level1Platforms);
@@ -41,6 +41,8 @@ const getablesFactory = (
       });
     }
   });
+
+  return items[0];
 };
 
 export default getablesFactory;

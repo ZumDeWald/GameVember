@@ -70,10 +70,11 @@ class UIScene extends Scene {
 
     sceneEvents.on(
       EventsName.GET_CLING,
-      (i, p) => {
+      (i, p, c) => {
         this.scene.pause("playGame");
         this.scene.add("traverse", DimensionTraversal, true, {
           player: p,
+          camera: c,
         });
       },
       this
@@ -81,10 +82,11 @@ class UIScene extends Scene {
 
     sceneEvents.on(
       EventsName.GET_TELE,
-      (i, p) => {
+      (i, p, c) => {
         this.scene.pause("playGame");
         this.scene.add("traverse", DimensionTraversal, true, {
           player: p,
+          camera: c,
         });
       },
       this
