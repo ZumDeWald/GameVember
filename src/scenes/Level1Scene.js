@@ -11,7 +11,6 @@ import { generateInputs } from "../utilities/inputListeners.js";
 import Computron from "../classes/Computron.js";
 import CastSelector from "../classes/CastSelector.js";
 import Switch from "../classes/Switch.js";
-import DimensionTraversal from "./DimensionTraversal.js";
 
 class Level1Scene extends Phaser.Scene {
   constructor() {
