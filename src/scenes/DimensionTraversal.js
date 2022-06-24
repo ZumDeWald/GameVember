@@ -9,6 +9,7 @@ class DimensionTraversal extends Scene {
     this.setFrame = player.frame.name;
     this.circleSize = 50;
     this.reverse = false;
+    this.animComplete = false;
   }
 
   create() {
@@ -76,45 +77,31 @@ class DimensionTraversal extends Scene {
 
     this.cameras.main.setBackgroundColor(0xffffff);
 
+    this.rectGroup = this.add.group();
+    let rectGroupY = -100;
+    for (var i = 0; i < 20; i++) {
+      const newRect = this.add.rectangle(0, rectGroupY, 800, 5);
+      newRect.setOrigin(0);
+      newRect.setFillStyle(0x000000, 0.7);
+      newRect.setDepth(3);
+      this.rectGroup.add(newRect);
+      rectGroupY += 45;
+    }
+
     this.rect1 = this.add.rectangle(0, -40, 800, 40);
     this.rect1.setOrigin(0);
     this.rect1.setFillStyle(0x5744d1, 0.5);
     this.rect1.setDepth(5);
 
-    this.rect2 = this.add.rectangle(0, -100, 800, 20);
+    this.rect2 = this.add.rectangle(0, 900, 800, 20);
     this.rect2.setOrigin(0);
-    this.rect2.setFillStyle(0xf31c42, 0.6);
+    this.rect2.setFillStyle(0x000011, 0.4);
     this.rect2.setDepth(5);
 
-    this.rect3 = this.add.rectangle(0, -124, 800, 20);
+    this.rect3 = this.add.rectangle(0, 300, 800, 20);
     this.rect3.setOrigin(0);
-    this.rect3.setFillStyle(0xcceedc, 1);
+    this.rect3.setFillStyle(0x000022, 0.4);
     this.rect3.setDepth(5);
-
-    this.rect4 = this.add.rectangle(0, 900, 800, 20);
-    this.rect4.setOrigin(0);
-    this.rect4.setFillStyle(0x000000, 0.3);
-    this.rect4.setDepth(5);
-
-    this.rect5 = this.add.rectangle(0, -80, 800, 10);
-    this.rect5.setOrigin(0);
-    this.rect5.setFillStyle(0xf31c42, 0.5);
-    this.rect5.setDepth(5);
-
-    this.rect6 = this.add.rectangle(0, -80, 800, 30);
-    this.rect6.setOrigin(0);
-    this.rect6.setFillStyle(0x5744d1, 0.5);
-    this.rect6.setDepth(5);
-
-    this.rect7 = this.add.rectangle(0, -170, 800, 20);
-    this.rect7.setOrigin(0);
-    this.rect7.setFillStyle(0x5744d1, 0.4);
-    this.rect7.setDepth(5);
-
-    this.rect8 = this.add.rectangle(0, 300, 800, 20);
-    this.rect8.setOrigin(0);
-    this.rect8.setFillStyle(0x000000, 0.2);
-    this.rect8.setDepth(5);
 
     // Mask
     this.maskShape = this.make.graphics();
@@ -126,31 +113,36 @@ class DimensionTraversal extends Scene {
 
     this.cameras.main.setMask(this.mask);
 
-    this.time.delayedCall(1400, () => {
-      this.cameras.main.fadeOut(50, 0, 0, 0);
+    this.time.delayedCall(500, () => {
+      this.cameras.main.flash(500, 230, 240, 255);
     });
 
-    this.time.delayedCall(1450, () => {
+    this.time.delayedCall(1400, () => {
+      this.cameras.main.fadeOut(80, 0, 0, 0);
+    });
+
+    this.time.delayedCall(1470, () => {
       this.scene.resume("playGame");
       this.scene.remove(this);
     });
   }
 
   update() {
-    this.rect1.y += 25;
-    this.rect2.y += 20;
-    this.rect3.y += 12;
-    this.rect4.y -= 15;
-    this.rect5.y += 20;
-    this.rect6.y += 15;
-    this.rect7.y += 10;
-    this.rect8.y -= 10;
+    if (this.animComplete) return;
+    this.rect1.y += 20;
+    this.rect2.y -= 15;
+    this.rect3.y -= 10;
+    this.rectGroup.children.each((rect) => {
+      rect.y += 1;
+    });
+
     if (!this.reverse) {
       this.circleSize += 20;
       this.maskShape.clear();
       this.maskShape.fillCircle(this.setX, this.setY, this.circleSize);
       if (this.circleSize >= 900) this.reverse = true;
     } else {
+      this.cameras.main.shake(300, 0.01);
       this.circleSize -= 20;
       this.maskShape.clear();
       this.maskShape.fillCircle(this.setX, this.setY, this.circleSize);

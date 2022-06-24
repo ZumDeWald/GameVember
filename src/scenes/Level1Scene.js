@@ -112,7 +112,8 @@ class Level1Scene extends Phaser.Scene {
       EventsName.GET_POTION,
       false
     );
-    getablesFactory(
+
+    this.tele = getablesFactory(
       this,
       this.level1Map,
       "powerUps",
@@ -122,6 +123,9 @@ class Level1Scene extends Phaser.Scene {
       EventsName.GET_TELE,
       true
     );
+
+    this.tele.setPosition(200, 150);
+
     getablesFactory(
       this,
       this.level1Map,
