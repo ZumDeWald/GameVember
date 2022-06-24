@@ -130,7 +130,7 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.clingName = this.scene.add.text(
       this.settings.boxLeft + 619,
       this.settings.boxTop + 20,
-      `-   ???`,
+      `- ???`,
       {
         color: "#ddd",
       }
@@ -140,7 +140,7 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.castName = this.scene.add.text(
       this.settings.boxLeft + 619,
       this.settings.boxTop + 48,
-      `-   ???`,
+      `- ???`,
       {
         color: "#ddd",
       }
@@ -210,8 +210,11 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.castName.style.color = "#fff";
     this.castIcon.setAlpha(1);
     this.tweenIcon(this.castIcon);
-    this.controlsTut.text = this.settings.controlsWithCast;
-    this.tweenControls();
+
+    this.scene.time.delayedCall(1500, () => {
+      this.controlsTut.text = this.settings.controlsWithCast;
+      this.tweenControls();
+    });
   }
 
   activateCling() {
