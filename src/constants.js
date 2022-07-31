@@ -19,6 +19,8 @@ export const EventsName = {
   OPEN_DIALOG: "OpenDialog",
   PAUSE_GAME: "Pause",
   RESUME_GAME: "UnPause",
+  SHOW_CHECK_BUBBLE: "ShowCheckBubble",
+  HIDE_CHECK_BUBBLE: "HideCheckBubble",
 };
 
 export const GameStatus = {

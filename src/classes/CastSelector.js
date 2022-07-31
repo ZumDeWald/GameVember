@@ -13,6 +13,7 @@ export default class Computron extends Physics.Arcade.Image {
     }
 
     super(scene, initialX, initialY, "arrow-down");
+    this.setScale(0.35);
 
     this.inputs = inputsFromScene;
     this.castOptions = castCandidates;

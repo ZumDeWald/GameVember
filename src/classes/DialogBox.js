@@ -75,15 +75,33 @@ export default class DialogBox extends Phaser.GameObjects.Group {
     this.text.setDepth(11);
     this.add(this.text);
 
-    this.next = this.scene.make.text(
-      {
-        x: this.settings.boxLeft + 640,
-        y: this.settings.boxTop + 120,
-        text: `L ➡️`,
-      },
-      true
+    const nextCircle = this.scene.add.graphics();
+    nextCircle.fillStyle(0x000000);
+    nextCircle.fillCircle(
+      this.settings.boxLeft + 660,
+      this.settings.boxTop + 120,
+      16
     );
+    nextCircle.lineStyle(2, 0xffffff);
+    nextCircle.strokeCircle(
+      this.settings.boxLeft + 660,
+      this.settings.boxTop + 120,
+      16
+    );
+
+    this.next = this.scene.add.group([
+      nextCircle,
+      this.scene.make.text(
+        {
+          x: this.settings.boxLeft + 656,
+          y: this.settings.boxTop + 112,
+          text: `L`,
+        },
+        true
+      ),
+    ]);
     this.next.setDepth(11);
+    this.next.setVisible(false);
     this.add(this.next);
 
     this.scene.add.existing(this);

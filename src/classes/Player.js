@@ -32,6 +32,7 @@ export default class Player extends CharacterBase {
       },
       this
     );
+
     sceneEvents.on(
       EventsName.GET_CLING,
       () => {
@@ -39,6 +40,7 @@ export default class Player extends CharacterBase {
       },
       this
     );
+
     sceneEvents.on(
       EventsName.CAST_END,
       () => {
@@ -47,6 +49,7 @@ export default class Player extends CharacterBase {
       },
       this
     );
+
     sceneEvents.on(
       EventsName.RESET_PLAYER,
       () => {
