@@ -15,6 +15,7 @@ import Switch from "../classes/Switch.js";
 class Level1Scene extends Phaser.Scene {
   constructor() {
     super("playGame");
+    this.paused = false;
   }
 
   initEnemies() {
@@ -44,7 +45,8 @@ class Level1Scene extends Phaser.Scene {
     sceneEvents.on(
       EventsName.PAUSE_GAME,
       () => {
-        this.scene.pause("playGame");
+        this.physics.world.pause();
+        this.paused = true;
       },
       this
     );
@@ -52,7 +54,8 @@ class Level1Scene extends Phaser.Scene {
     sceneEvents.on(
       EventsName.RESUME_GAME,
       () => {
-        this.scene.resume("playGame");
+        this.physics.world.resume();
+        this.paused = false;
       },
       this
     );
@@ -136,12 +139,31 @@ class Level1Scene extends Phaser.Scene {
     );
 
     this.castables = this.physics.add.group([
-      new Computron(this, 570, 108, this.inputs, this.player, "c2"),
-      new Computron(this, 700, 164, this.inputs, this.player, "c1"),
-      new Computron(this, 112, 468, this.inputs, this.player, "c1"),
-      new Computron(this, 688, 608, this.inputs, this.player, "c1"),
-      new Computron(this, 1136, 608, this.inputs, this.player, "c1"),
+      new Computron(this, 700, 164, this.inputs, this.player, "c1", "Firsten"),
+      new Computron(
+        this,
+        688,
+        608,
+        this.inputs,
+        this.player,
+        "c1",
+        "Malfunctioning Eddie"
+      ),
+      new Computron(
+        this,
+        1136,
+        608,
+        this.inputs,
+        this.player,
+        "c1",
+        "Switch Bait"
+      ),
+      new Computron(this, 572, 108, this.inputs, this.player, "c2", "Kenny"),
+      new Computron(this, 115, 468, this.inputs, this.player, "c1", "Clingy"),
     ]);
+
+    this.castables.getMatching("name", "Firsten")[0].settings.texturePrefix =
+      "computron";
 
     sceneEvents.on(
       EventsName.CAST_START,
@@ -249,29 +271,35 @@ class Level1Scene extends Phaser.Scene {
       this
     );
 
-    // this.time.delayedCall(
-    //   1000,
-    //   () => {
-    //     this.scene.add("traverse", DimensionTraversal, true, {
-    //       player: this.player,
-    //     });
-    //   },
-    //   null,
-    //   this
-    // );
+    sceneEvents.on(
+      EventsName.GET_CLING,
+      () => {
+        this.time.delayedCall(300, () => {
+          this.castables.getMatching(
+            "name",
+            "Clingy"
+          )[0].settings.texturePrefix = "computron";
+        });
+      },
+      this
+    );
 
-    // this.time.delayedCall(
-    //   3000,
-    //   () => {
-    //     this.scene.remove("traverse");
-    //   },
-    //   null,
-    //   this
-    // );
+    sceneEvents.on(
+      EventsName.GET_TELE,
+      () => {
+        this.time.delayedCall(300, () => {
+          this.castables.getMatching(
+            "name",
+            "Kenny"
+          )[0].settings.texturePrefix = "computron";
+        });
+      },
+      this
+    );
   }
 
   update() {
-    this.player.update();
+    if (!this.paused) this.player.update();
   }
 }
 

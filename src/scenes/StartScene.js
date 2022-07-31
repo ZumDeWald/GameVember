@@ -16,9 +16,18 @@ import Health_sm from "../assets/Health_sm.png";
 import Grate from "../assets/GrateNoEnds.png";
 import Heart from "../assets/heart_full.png";
 import Computron from "../assets/Computron.png";
-import ArrowDown from "../assets/ArrowDown.png";
+import ComputronDed from "../assets/ComputronDed.png";
 import ArrowUp from "../assets/ArrowUp.png";
+import ArrowDown from "../assets/ArrowDown.png";
+import ArrowLeft from "../assets/ArrowLeft.png";
+import ArrowRight from "../assets/ArrowRight.png";
+import ArrowJump from "../assets/ArrowJump.png";
+import SwordIcon from "../assets/Sword.png";
+import CastIcon from "../assets/Cast.png";
+import PauseIcon from "../assets/PauseIcon.png";
+import CheckBubble from "../assets/CheckBubble.png";
 import ComputronOutline from "../assets/ComputronOutline.png";
+import ComputronDedOutline from "../assets/ComputronDedOutline.png";
 
 class StartScene extends Phaser.Scene {
   constructor() {
@@ -38,9 +47,18 @@ class StartScene extends Phaser.Scene {
     this.load.image("grate", Grate);
     this.load.image("heart", Heart);
     this.load.image("computron", Computron);
-    this.load.image("arrow-down", ArrowDown);
-    this.load.image("computron-outline", ComputronOutline);
+    this.load.image("computron-ded", ComputronDed);
     this.load.image("arrow-up", ArrowUp);
+    this.load.image("arrow-down", ArrowDown);
+    this.load.image("arrow-left", ArrowLeft);
+    this.load.image("arrow-right", ArrowRight);
+    this.load.image("arrow-jump", ArrowJump);
+    this.load.image("icon-sword", SwordIcon);
+    this.load.image("icon-cast", CastIcon);
+    this.load.image("icon-pause", PauseIcon);
+    this.load.image("computron-outline", ComputronOutline);
+    this.load.image("computron-ded-outline", ComputronDedOutline);
+    this.load.image("check-bubble", CheckBubble);
   }
 
   create() {

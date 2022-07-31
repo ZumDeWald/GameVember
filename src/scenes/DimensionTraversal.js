@@ -1,4 +1,6 @@
-import { Curves, GameObjects, Scene } from "phaser";
+import { GameObjects, Scene } from "phaser";
+import { sceneEvents } from "../events/EventsCenter.js";
+import { EventsName } from "../constants.js";
 
 class DimensionTraversal extends Scene {
   init({ player, camera }) {
@@ -122,7 +124,7 @@ class DimensionTraversal extends Scene {
     });
 
     this.time.delayedCall(1470, () => {
-      this.scene.resume("playGame");
+      sceneEvents.emit(EventsName.RESUME_GAME);
       this.scene.remove(this);
     });
   }

@@ -5,11 +5,21 @@ import { sceneEvents } from "../events/EventsCenter.js";
 import { getConversation } from "../dialog.js";
 
 export default class Computron extends Physics.Arcade.Image {
-  constructor(scene, x, y, inputsFromScene, target, conversationId) {
-    super(scene, x, y, "computron");
+  constructor(
+    scene,
+    x,
+    y,
+    inputsFromScene,
+    target,
+    conversationId,
+    computronName
+  ) {
+    super(scene, x, y, "computron-ded");
 
     this.inputs = inputsFromScene;
     this.target = target;
+    this.scale = 0.26;
+    this.name = computronName;
 
     this.settings = {
       occupied: false,
@@ -17,23 +27,17 @@ export default class Computron extends Physics.Arcade.Image {
       conversationTriggered: false,
       conversation: getConversation(conversationId),
       castActive: false,
+      showingCheckBubble: false,
+      texturePrefix: "computron-ded",
     };
-
-    this.computronOutline = this.scene.add.image(
-      this.x,
-      this.y,
-      "computron-outline"
-    );
-    this.computronOutline.setDepth(-1);
-
-    this.checkBubble = this.scene.add.image(this.x, this.y, "arrow-up");
-    this.checkBubble.setScale(0.6);
-    this.checkBubble.setDepth(-1);
 
     sceneEvents.on(EventsName.CAST_START, () => {
       this.settings.castActive = true;
-      this.computronOutline.setVisible(false);
-      this.checkBubble.setVisible(false);
+      this.setTexture(this.settings.texturePrefix);
+      if (this.settings.showingCheckBubble) {
+        this.settings.showingCheckBubble = false;
+        sceneEvents.emit(EventsName.HIDE_CHECK_BUBBLE);
+      }
     });
 
     sceneEvents.on(EventsName.CAST_END, () => {
@@ -72,22 +76,29 @@ export default class Computron extends Physics.Arcade.Image {
       { x: this.target.x, y: this.target.y }
     );
     if (diff < 30) {
-      this.computronOutline.setPosition(this.x, this.y);
-      this.computronOutline.setVisible(true);
+      this.setTexture(`${this.settings.texturePrefix}-outline`);
 
-      this.checkBubble.setPosition(this.x, this.y - 24);
-      this.checkBubble.setVisible(true);
+      if (!this.settings.showingCheckBubble) {
+        this.settings.showingCheckBubble = true;
+        sceneEvents.emit(EventsName.SHOW_CHECK_BUBBLE);
+      }
 
       if (this.inputs.up.isDown) {
         this.settings.conversationTriggered = true;
         sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.conversation);
         sceneEvents.emit(EventsName.PAUSE_GAME);
-        this.computronOutline.setVisible(false);
-        this.checkBubble.setVisible(false);
+        this.setTexture(this.settings.texturePrefix);
+        if (this.settings.showingCheckBubble) {
+          this.settings.showingCheckBubble = false;
+          sceneEvents.emit(EventsName.HIDE_CHECK_BUBBLE);
+        }
       }
     } else {
-      this.computronOutline.setVisible(false);
-      this.checkBubble.setVisible(false);
+      this.setTexture(this.settings.texturePrefix);
+      if (this.settings.showingCheckBubble) {
+        this.settings.showingCheckBubble = false;
+        sceneEvents.emit(EventsName.HIDE_CHECK_BUBBLE);
+      }
     }
   }
 

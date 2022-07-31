@@ -17,6 +17,8 @@ class UIScene extends Scene {
       gamePaused: false,
       inputTimeout: 0,
       dialogOpen: false,
+      checkBubbleState: "CLOSED",
+      checkBubbleStep: 0,
     };
 
     this.gameEndHandler = (status) => {
@@ -71,7 +73,7 @@ class UIScene extends Scene {
     sceneEvents.on(
       EventsName.GET_CLING,
       (i, p, c) => {
-        this.scene.pause("playGame");
+        sceneEvents.emit(EventsName.PAUSE_GAME);
         this.scene.add("traverse", DimensionTraversal, true, {
           player: p,
           camera: c,
@@ -83,11 +85,27 @@ class UIScene extends Scene {
     sceneEvents.on(
       EventsName.GET_TELE,
       (i, p, c) => {
-        this.scene.pause("playGame");
+        sceneEvents.emit(EventsName.PAUSE_GAME);
         this.scene.add("traverse", DimensionTraversal, true, {
           player: p,
           camera: c,
         });
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.SHOW_CHECK_BUBBLE,
+      () => {
+        this.settings.checkBubbleState = "OPENING";
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.HIDE_CHECK_BUBBLE,
+      () => {
+        this.settings.checkBubbleState = "CLOSING";
       },
       this
     );
@@ -97,6 +115,11 @@ class UIScene extends Scene {
     this.miniMapBorder = this.add.rectangle(650, 20, 120, 100, 0x000000, 0);
     this.miniMapBorder.setOrigin(0);
     this.miniMapBorder.setStrokeStyle(2, 0x000000, 1);
+
+    this.checkBubble = this.add.image(850, 532, "check-bubble");
+    this.checkBubble.setOrigin(0);
+    this.checkBubble.setScale(0.5);
+    this.checkBubble.setDepth(10);
 
     this.inputs = generateInputs(this);
     this.initListeners();
@@ -161,6 +184,24 @@ class UIScene extends Scene {
         this.healthBarBorder.setDisplaySize(GameParams.HPMAX, 16);
       },
     });
+  }
+
+  update() {
+    if (this.settings.checkBubbleState === "OPENING") {
+      if (this.checkBubble.x > 630) {
+        this.checkBubble.x -= 20;
+      } else {
+        this.settings.checkBubbleState = "OPEN";
+      }
+    }
+
+    if (this.settings.checkBubbleState === "CLOSING") {
+      if (this.checkBubble.x < 850) {
+        this.checkBubble.x += 20;
+      } else {
+        this.settings.checkBubbleState = "CLOSED";
+      }
+    }
   }
 }
 
