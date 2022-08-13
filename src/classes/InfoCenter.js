@@ -17,45 +17,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
   K     L     SPACE`,
     };
 
-    // Health Powerups
-    this.healthPowerUpsBox = this.scene.add.graphics();
-    this.healthPowerUpsBox.fillStyle(0x000000);
-    this.healthPowerUpsBox.fillRoundedRect(
-      this.settings.boxLeft + 12,
-      this.settings.boxTop - 24,
-      147,
-      40,
-      8
-    );
-    this.healthPowerUpsBox.lineStyle(2, 0x545976);
-    this.healthPowerUpsBox.strokeRoundedRect(
-      this.settings.boxLeft + 11,
-      this.settings.boxTop - 25,
-      148,
-      40,
-      8
-    );
-    this.add(this.healthPowerUpsBox);
-
-    this.healthPowerUps = this.scene.add.group({
-      classType: Phaser.GameObjects.Image,
-    });
-
-    this.healthPowerUps.createMultiple({
-      key: "potions",
-      frame: "potion_red",
-      setXY: {
-        x: this.settings.boxLeft + 34,
-        y: this.settings.boxTop - 10,
-        stepX: 25,
-      },
-      quantity: 5,
-      setScale: { x: 1.8, y: 1.8 },
-      setAlpha: { value: 0.6 },
-    });
-    this.healthPowerUps.setDepth(5);
-    this.add(this.healthPowerUps);
-
     // Cling & Cast Powerups
     this.powerUpsBox = this.scene.add.graphics();
     this.powerUpsBox.fillStyle(0x000000);
