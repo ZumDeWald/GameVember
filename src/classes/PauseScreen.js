@@ -12,6 +12,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       inputTimeout: 0,
       paused: false,
       dialogOpen: false,
+      healthCollected: 0,
     };
 
     // Main box
@@ -52,7 +53,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     // Abilities
     this.abilitiesFlourish = this.scene.add.text(
       this.settings.boxLeft,
-      this.settings.boxTop + 95,
+      this.settings.boxTop + 90,
       `||||||||||`,
       {
         fontFamily: "Times",
@@ -64,7 +65,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
 
     this.abilitiesHeader = this.scene.add.text(
       this.settings.boxLeft + 75,
-      this.settings.boxTop + 97,
+      this.settings.boxTop + 92,
       `Abilities`,
       {
         fontFamily: "Arial",
@@ -76,16 +77,16 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.pUp1Box = this.scene.add.graphics();
     this.pUp1Box.fillStyle(0x333333);
     this.pUp1Box.fillRoundedRect(
-      this.settings.boxLeft + 40,
-      this.settings.boxTop + 150,
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 145,
       60,
       60,
       8
     );
     this.pUp1Box.lineStyle(2, 0x545976);
     this.pUp1Box.strokeRoundedRect(
-      this.settings.boxLeft + 40,
-      this.settings.boxTop + 150,
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 145,
       60,
       60,
       8
@@ -93,8 +94,8 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.add(this.pUp1Box);
 
     this.pUp1Description = this.scene.add.text(
-      this.settings.boxLeft + 120,
-      this.settings.boxTop + 162,
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 157,
       `You're not sure why you even have this sword ...\nbut somehow it comforts you like a familiar friend.`,
       {
         fontSize: "16px",
@@ -105,16 +106,16 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.pUp2Box = this.scene.add.graphics();
     this.pUp2Box.fillStyle(0x333333);
     this.pUp2Box.fillRoundedRect(
-      this.settings.boxLeft + 40,
-      this.settings.boxTop + 235,
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 230,
       60,
       60,
       8
     );
     this.pUp2Box.lineStyle(2, 0x545976);
     this.pUp2Box.strokeRoundedRect(
-      this.settings.boxLeft + 40,
-      this.settings.boxTop + 235,
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 230,
       60,
       60,
       8
@@ -122,8 +123,8 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.add(this.pUp2Box);
 
     this.pUp2Description = this.scene.add.text(
-      this.settings.boxLeft + 120,
-      this.settings.boxTop + 247,
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 242,
       `You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.`,
       {
         fontSize: "16px",
@@ -134,16 +135,16 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.pUp3Box = this.scene.add.graphics();
     this.pUp3Box.fillStyle(0x333333);
     this.pUp3Box.fillRoundedRect(
-      this.settings.boxLeft + 40,
-      this.settings.boxTop + 320,
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 315,
       60,
       60,
       8
     );
     this.pUp3Box.lineStyle(2, 0x545976);
     this.pUp3Box.strokeRoundedRect(
-      this.settings.boxLeft + 40,
-      this.settings.boxTop + 320,
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 315,
       60,
       60,
       8
@@ -151,8 +152,8 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.add(this.pUp3Box);
 
     this.pUp3Description = this.scene.add.text(
-      this.settings.boxLeft + 120,
-      this.settings.boxTop + 325,
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 320,
       `You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.`,
       {
         fontSize: "16px",
@@ -187,7 +188,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.healthPowerUpsBox = this.scene.add.graphics();
     this.healthPowerUpsBox.fillStyle(0x333333);
     this.healthPowerUpsBox.fillRoundedRect(
-      this.settings.boxLeft + 40,
+      this.settings.boxLeft + 45,
       this.settings.boxTop + 456,
       60,
       60,
@@ -195,7 +196,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     );
     this.healthPowerUpsBox.lineStyle(2, 0x545976);
     this.healthPowerUpsBox.strokeRoundedRect(
-      this.settings.boxLeft + 40,
+      this.settings.boxLeft + 45,
       this.settings.boxTop + 456,
       60,
       60,
@@ -204,7 +205,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.add(this.healthPowerUpsBox);
 
     this.healthPowerUp = this.scene.add.image(
-      this.settings.boxLeft + 70,
+      this.settings.boxLeft + 75,
       this.settings.boxTop + 485,
       "potions",
       "potion_red"
@@ -213,7 +214,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.add(this.healthPowerUp);
 
     this.healthPowerUpTotal = this.scene.add.text(
-      this.settings.boxLeft + 120,
+      this.settings.boxLeft + 125,
       this.settings.boxTop + 472,
       `0 / 5`,
       {
@@ -239,6 +240,15 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       EventsName.RESUME_GAME,
       () => {
         this.settings.dialogOpen = false;
+      },
+      this
+    );
+
+    sceneEvents.on(
+      EventsName.GET_POTION,
+      () => {
+        this.settings.healthCollected += 1;
+        this.healthPowerUpTotal.text = `${this.settings.healthCollected} / 5`;
       },
       this
     );

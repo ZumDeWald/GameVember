@@ -95,6 +95,22 @@ class UIScene extends Scene {
     );
 
     sceneEvents.on(
+      EventsName.GET_POTION,
+      (i, p, c) => {
+        const healthVile = this.add.image(
+          (p.x - c.worldView.x) * 1.8,
+          (p.y - c.worldView.y) * 1.8,
+          "potions",
+          "potion_red"
+        );
+        healthVile.setOrigin(0);
+        healthVile.setScale(1.8);
+        this.handleGetPotion(healthVile);
+      },
+      this
+    );
+
+    sceneEvents.on(
       EventsName.SHOW_CHECK_BUBBLE,
       () => {
         this.settings.checkBubbleState = "OPENING";
@@ -109,6 +125,14 @@ class UIScene extends Scene {
       },
       this
     );
+
+    sceneEvents.on(
+      EventsName.PLAYER_HEALTH_CHANGE,
+      this.handlePlayerHealthChange,
+      this
+    );
+
+    sceneEvents.on(EventsName.GAMEOVER, this.gameEndHandler, this);
   }
 
   create() {
@@ -122,9 +146,19 @@ class UIScene extends Scene {
     this.checkBubble.setDepth(10);
 
     this.inputs = generateInputs(this);
-    this.initListeners();
 
     this.healthIcon = this.add.image(28, 27, "heart");
+
+    this.healthBarBacking = this.add.rectangle(
+      50,
+      18,
+      GameParams.HPMAX,
+      16,
+      0xd04835,
+      0
+    );
+    this.healthBarBacking.setFillStyle(0xffffff, 0.6);
+    this.healthBarBacking.setOrigin(0, 0);
 
     this.healthBar = this.add.rectangle(
       50,
@@ -144,22 +178,12 @@ class UIScene extends Scene {
       0xd04835,
       0
     );
-    this.healthBarBorder.setStrokeStyle(2, 0x000);
+    this.healthBarBorder.setStrokeStyle(2, 0x000000);
     this.healthBarBorder.setOrigin(0, 0);
 
     this.dialog = new DialogBox(this, this.inputs);
     this.pauseScreen = new PauseScreen(this, this.inputs);
     this.infoCenter = new InfoCenter(this, this.inputs);
-  }
-
-  initListeners() {
-    sceneEvents.on(
-      EventsName.PLAYER_HEALTH_CHANGE,
-      this.handlePlayerHealthChange,
-      this
-    );
-    sceneEvents.on(EventsName.GET_POTION, this.handleGetPotion, this);
-    sceneEvents.on(EventsName.GAMEOVER, this.gameEndHandler, this);
   }
 
   handlePlayerHealthChange(newHealth) {
@@ -170,9 +194,21 @@ class UIScene extends Scene {
     }
   }
 
-  handleGetPotion() {
+  handleGetPotion(healthVile) {
+    this.tweens.add({
+      targets: healthVile,
+      duration: 800,
+      x: 30,
+      y: 15,
+      ease: "Cubic.easeInOut",
+      onComplete: () => {
+        healthVile.destroy();
+      },
+    });
+
     this.tweens.add({
       targets: [this.healthBar, this.healthBarBorder, this.healthIcon],
+      delay: 800,
       duration: 100,
       repeat: 2,
       repeatDelay: 50,
@@ -182,6 +218,7 @@ class UIScene extends Scene {
         GameParams.HPMAX += GameParams.HPADD;
         this.healthBar.setDisplaySize(GameParams.HPMAX, 16);
         this.healthBarBorder.setDisplaySize(GameParams.HPMAX, 16);
+        this.healthBarBacking.setDisplaySize(GameParams.HPMAX, 16);
       },
     });
   }

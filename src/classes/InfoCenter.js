@@ -17,46 +17,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
   K     L     SPACE`,
     };
 
-    // Cling & Cast Powerups
-    this.powerUpsBox = this.scene.add.graphics();
-    this.powerUpsBox.fillStyle(0x000000);
-    this.powerUpsBox.fillRoundedRect(
-      this.settings.boxLeft + 181,
-      this.settings.boxTop - 24,
-      74,
-      40,
-      8
-    );
-    this.powerUpsBox.lineStyle(2, 0x545976);
-    this.powerUpsBox.strokeRoundedRect(
-      this.settings.boxLeft + 180,
-      this.settings.boxTop - 25,
-      75,
-      40,
-      8
-    );
-    this.add(this.powerUpsBox);
-
-    this.clingIcon = this.scene.add.image(
-      this.settings.boxLeft + 202,
-      this.settings.boxTop - 10,
-      "potions",
-      "potion_purple"
-    );
-    this.clingIcon.setScale(1.8);
-    this.clingIcon.setAlpha(0.4);
-    this.add(this.clingIcon);
-
-    this.castIcon = this.scene.add.image(
-      this.settings.boxLeft + 234,
-      this.settings.boxTop - 10,
-      "potions",
-      "potion_white"
-    );
-    this.castIcon.setScale(1.8);
-    this.castIcon.setAlpha(0.4);
-    this.add(this.castIcon);
-
     // Main box
     this.backingBox = this.scene.add.graphics();
     this.backingBox.fillStyle(0x000000);
@@ -164,20 +124,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.castControlIconGroup.setDepth(5);
     this.castControlIconGroup.scaleXY(-0.5);
     this.castControlIconGroup.setVisible(false);
-
-    sceneEvents.on(
-      EventsName.GET_POTION,
-      (indexOfItem) => {
-        this.settings.collectedPowerUps.push(indexOfItem);
-        this.healthPowerUps.children.each((pu, i) => {
-          if (this.settings.collectedPowerUps.includes(i)) {
-            pu.setAlpha(1);
-            this.tweenIcon(pu);
-          }
-        });
-      },
-      this
-    );
 
     sceneEvents.on(
       EventsName.GET_TELE,
