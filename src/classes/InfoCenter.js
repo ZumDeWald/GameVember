@@ -9,8 +9,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     this.settings = {
       boxTop: 510,
       boxLeft: 22,
-      inputTimeout: 0,
-      collectedPowerUps: [],
       controlsWithCast: ` 
   A     W     D     S + K
       
@@ -134,14 +132,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
     );
 
     sceneEvents.on(
-      EventsName.GET_CLING,
-      () => {
-        this.activateCling();
-      },
-      this
-    );
-
-    sceneEvents.on(
       EventsName.CAST_START,
       () => {
         this.setControlsCastSelect();
@@ -170,9 +160,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
   }
 
   activateCast() {
-    this.castIcon.setAlpha(1);
-    this.tweenIcon(this.castIcon);
-
     this.scene.time.delayedCall(1500, () => {
       this.controlsTut.text = this.settings.controlsWithCast;
 
@@ -187,11 +174,6 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
       this.mainControlIconGroup.add(addedCastIcon, true);
       this.tweenControls();
     });
-  }
-
-  activateCling() {
-    this.clingIcon.setAlpha(1);
-    this.tweenIcon(this.clingIcon);
   }
 
   setControlsCastSelect() {
@@ -235,20 +217,4 @@ x K   ✓ L`;
       },
     });
   }
-
-  tweenIcon(icon) {
-    this.scene.tweens.add({
-      targets: [icon],
-      duration: 100,
-      repeat: 1,
-      repeatDelay: 50,
-      yoyo: true,
-      alpha: 0.3,
-      onComplete: () => {
-        icon.setAlpha(1);
-      },
-    });
-  }
-
-  preUpdate() {}
 }

@@ -125,7 +125,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.pUp2Description = this.scene.add.text(
       this.settings.boxLeft + 125,
       this.settings.boxTop + 242,
-      `You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.`,
+      "",
       {
         fontSize: "16px",
       }
@@ -154,7 +154,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     this.pUp3Description = this.scene.add.text(
       this.settings.boxLeft + 125,
       this.settings.boxTop + 320,
-      `You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.`,
+      "",
       {
         fontSize: "16px",
       }
@@ -256,18 +256,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     sceneEvents.on(
       EventsName.GET_CLING,
       () => {
-        this.clingInfo = this.scene.add.text(
-          10,
-          this.settings.boxTop + 100,
-          `
-      -| Wall Cling |- 
-
-          > Here you can cling to and jump from walls allowing even more 
-          versitility in traversal than you knew previously.`
-        );
-        this.clingInfo.setDepth(11);
-        this.clingInfo.setVisible(false);
-        this.add(this.clingInfo);
+        this.pUp2Description.text = `You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.`;
       },
       this
     );
@@ -275,19 +264,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     sceneEvents.on(
       EventsName.GET_TELE,
       () => {
-        this.castInfo = this.scene.add.text(
-          10,
-          this.settings.boxTop + 230,
-          `
-      -| Cast |- 
-
-          > In this reality you are able to cast your kenetic consciousness
-          into those inanimate objects open to receiving it and manipulate 
-          their position.`
-        );
-        this.castInfo.setDepth(11);
-        this.castInfo.setVisible(false);
-        this.add(this.castInfo);
+        this.pUp3Description.text = `You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.`;
       },
       this
     );

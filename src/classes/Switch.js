@@ -19,7 +19,7 @@ export default class Switch extends Phaser.GameObjects.Sprite {
     sceneEvents.on(
       EventsName.ATTACK,
       () => {
-        this.activateSwitch(scene.player, this.grate);
+        this.handleActivateSwitch(scene.player);
       },
       this
     );
@@ -31,24 +31,28 @@ export default class Switch extends Phaser.GameObjects.Sprite {
     this.setDepth(-1);
   }
 
-  moveGrate(grate) {
-    grate.setVelocityY(-50);
+  moveGrate() {
+    this.grate.setVelocityY(-50);
     this.scene.time.delayedCall(750, () => {
-      grate.setVelocityY(0);
-      grate.destroy();
+      this.grate.setVelocityY(0);
+      this.grate.destroy();
     });
   }
 
-  activateSwitch(player, grate) {
+  activateSwitch() {
+    this.play("switch_on");
+    this.moveGrate();
+    this.settings.activated = true;
+  }
+
+  handleActivateSwitch(player) {
     if (this.settings.activated) return;
     const diff = Math.Distance.BetweenPoints(
       { x: this.x, y: this.y },
       { x: player.x, y: player.y }
     );
     if (diff < 25) {
-      this.play("switch_on");
-      this.moveGrate(grate);
-      this.settings.activated = true;
+      this.activateSwitch();
     }
   }
 }
