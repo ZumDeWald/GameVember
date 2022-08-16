@@ -29,6 +29,13 @@ export default class Computron extends Physics.Arcade.Image {
       castActive: false,
       showingCheckBubble: false,
       texturePrefix: "computron-ded",
+      dedResponse: [
+        {
+          content: "...",
+          speaker: "Computron",
+          endOfConvo: true,
+        },
+      ],
     };
 
     sceneEvents.on(EventsName.CAST_START, () => {
@@ -84,8 +91,12 @@ export default class Computron extends Physics.Arcade.Image {
       }
 
       if (this.inputs.up.isDown) {
-        this.settings.conversationTriggered = true;
-        sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.conversation);
+        if (this.settings.texturePrefix === "computron-ded") {
+          sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.dedResponse);
+        } else {
+          this.settings.conversationTriggered = true;
+          sceneEvents.emit(EventsName.OPEN_DIALOG, this.settings.conversation);
+        }
         sceneEvents.emit(EventsName.PAUSE_GAME);
         this.setTexture(this.settings.texturePrefix);
         if (this.settings.showingCheckBubble) {
@@ -116,7 +127,10 @@ export default class Computron extends Physics.Arcade.Image {
     }
 
     if (this.settings.inputTimeout > 0) {
-      if (this.settings.inputTimeout === 1) this.angle += 90;
+      if (this.settings.inputTimeout === 1) {
+        this.angle += 90;
+        if (this.angle >= 360) this.angle = 0;
+      }
       if (this.settings.inputTimeout >= 15) {
         this.settings.inputTimeout = 0;
       } else {

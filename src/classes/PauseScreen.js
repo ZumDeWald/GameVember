@@ -12,6 +12,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       inputTimeout: 0,
       paused: false,
       dialogOpen: false,
+      healthCollected: 0,
     };
 
     // Main box
@@ -36,8 +37,11 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
 
     this.header = this.scene.add.text(
       100,
-      this.settings.boxTop + 15,
-      `--]||-  PAUSE  -||[--`
+      this.settings.boxTop + 10,
+      `--]||-  PAUSE  -||[--`,
+      {
+        fontSize: "18px",
+      }
     );
     this.header.setDepth(11);
     this.add(this.header);
@@ -45,6 +49,180 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       this.scene.game.scale.width / 2 - this.header.width / 2,
       this.settings.boxTop + 40
     );
+
+    // Abilities
+    this.abilitiesFlourish = this.scene.add.text(
+      this.settings.boxLeft,
+      this.settings.boxTop + 90,
+      `||||||||||`,
+      {
+        fontFamily: "Times",
+        fontSize: "32px",
+      }
+    );
+    this.abilitiesFlourish.setAlpha(0.5);
+    this.add(this.abilitiesFlourish);
+
+    this.abilitiesHeader = this.scene.add.text(
+      this.settings.boxLeft + 75,
+      this.settings.boxTop + 92,
+      `Abilities`,
+      {
+        fontFamily: "Arial",
+        fontSize: "24px",
+      }
+    );
+    this.add(this.abilitiesHeader);
+
+    this.pUp1Box = this.scene.add.graphics();
+    this.pUp1Box.fillStyle(0x333333);
+    this.pUp1Box.fillRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 145,
+      60,
+      60,
+      8
+    );
+    this.pUp1Box.lineStyle(2, 0x545976);
+    this.pUp1Box.strokeRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 145,
+      60,
+      60,
+      8
+    );
+    this.add(this.pUp1Box);
+
+    this.pUp1Description = this.scene.add.text(
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 157,
+      `You're not sure why you even have this sword ...\nbut somehow it comforts you like a familiar friend.`,
+      {
+        fontSize: "16px",
+      }
+    );
+    this.add(this.pUp1Description);
+
+    this.pUp2Box = this.scene.add.graphics();
+    this.pUp2Box.fillStyle(0x333333);
+    this.pUp2Box.fillRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 230,
+      60,
+      60,
+      8
+    );
+    this.pUp2Box.lineStyle(2, 0x545976);
+    this.pUp2Box.strokeRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 230,
+      60,
+      60,
+      8
+    );
+    this.add(this.pUp2Box);
+
+    this.pUp2Description = this.scene.add.text(
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 242,
+      "",
+      {
+        fontSize: "16px",
+      }
+    );
+    this.add(this.pUp2Description);
+
+    this.pUp3Box = this.scene.add.graphics();
+    this.pUp3Box.fillStyle(0x333333);
+    this.pUp3Box.fillRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 315,
+      60,
+      60,
+      8
+    );
+    this.pUp3Box.lineStyle(2, 0x545976);
+    this.pUp3Box.strokeRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 315,
+      60,
+      60,
+      8
+    );
+    this.add(this.pUp3Box);
+
+    this.pUp3Description = this.scene.add.text(
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 320,
+      "",
+      {
+        fontSize: "16px",
+      }
+    );
+    this.add(this.pUp3Description);
+
+    // Health Powerups
+    this.healthPowerUpsHeaderFlourish = this.scene.add.text(
+      this.settings.boxLeft,
+      this.settings.boxTop + 410,
+      `||||||||||`,
+      {
+        fontFamily: "Times",
+        fontSize: "32px",
+      }
+    );
+    this.healthPowerUpsHeaderFlourish.setAlpha(0.5);
+    this.add(this.healthPowerUpsHeaderFlourish);
+
+    this.healthPowerUpsHeader = this.scene.add.text(
+      this.settings.boxLeft + 75,
+      this.settings.boxTop + 412,
+      `Health Viles`,
+      {
+        fontFamily: "Arial",
+        fontSize: "24px",
+      }
+    );
+    this.add(this.healthPowerUpsHeader);
+
+    this.healthPowerUpsBox = this.scene.add.graphics();
+    this.healthPowerUpsBox.fillStyle(0x333333);
+    this.healthPowerUpsBox.fillRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 456,
+      60,
+      60,
+      8
+    );
+    this.healthPowerUpsBox.lineStyle(2, 0x545976);
+    this.healthPowerUpsBox.strokeRoundedRect(
+      this.settings.boxLeft + 45,
+      this.settings.boxTop + 456,
+      60,
+      60,
+      8
+    );
+    this.add(this.healthPowerUpsBox);
+
+    this.healthPowerUp = this.scene.add.image(
+      this.settings.boxLeft + 75,
+      this.settings.boxTop + 485,
+      "potions",
+      "potion_red"
+    );
+    this.healthPowerUp.setScale(2.8);
+    this.add(this.healthPowerUp);
+
+    this.healthPowerUpTotal = this.scene.add.text(
+      this.settings.boxLeft + 125,
+      this.settings.boxTop + 472,
+      `0 / 5`,
+      {
+        fontFamily: "Arial",
+        fontSize: "20px",
+      }
+    );
+    this.add(this.healthPowerUpTotal);
 
     this.setDepth(10);
     this.scene.add.existing(this);
@@ -67,20 +245,18 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     );
 
     sceneEvents.on(
+      EventsName.GET_POTION,
+      () => {
+        this.settings.healthCollected += 1;
+        this.healthPowerUpTotal.text = `${this.settings.healthCollected} / 5`;
+      },
+      this
+    );
+
+    sceneEvents.on(
       EventsName.GET_CLING,
       () => {
-        this.clingInfo = this.scene.add.text(
-          10,
-          this.settings.boxTop + 100,
-          `
-      -| Wall Cling |- 
-
-          > Here you can cling to and jump from walls allowing even more 
-          versitility in traversal than you knew previously.`
-        );
-        this.clingInfo.setDepth(11);
-        this.clingInfo.setVisible(false);
-        this.add(this.clingInfo);
+        this.pUp2Description.text = `You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.`;
       },
       this
     );
@@ -88,19 +264,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     sceneEvents.on(
       EventsName.GET_TELE,
       () => {
-        this.castInfo = this.scene.add.text(
-          10,
-          this.settings.boxTop + 230,
-          `
-      -| Cast |- 
-
-          > In this reality you are able to cast your kenetic consciousness
-          into those inanimate objects open to receiving it and manipulate 
-          their position.`
-        );
-        this.castInfo.setDepth(11);
-        this.castInfo.setVisible(false);
-        this.add(this.castInfo);
+        this.pUp3Description.text = `You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.`;
       },
       this
     );

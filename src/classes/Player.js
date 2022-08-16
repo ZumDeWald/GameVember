@@ -51,6 +51,14 @@ export default class Player extends CharacterBase {
     );
 
     sceneEvents.on(
+      EventsName.GET_POTION,
+      () => {
+        this.getHealth(GameParams.HPMAX + GameParams.HPADD);
+      },
+      this
+    );
+
+    sceneEvents.on(
       EventsName.RESET_PLAYER,
       () => {
         this.body.reset(100, 165);

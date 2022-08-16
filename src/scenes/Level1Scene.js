@@ -184,9 +184,11 @@ class Level1Scene extends Phaser.Scene {
       this
     );
 
-    this.switchSet1 = new Switch(this, 350, 170, 404, 156);
-    this.switchSet2 = new Switch(this, 816, 264, 948, 348);
-    this.switchSet3 = new Switch(this, 192, 528, 468, 592);
+    this.switches = this.physics.add.group([
+      new Switch(this, 350, 170, 404, 156),
+      new Switch(this, 816, 264, 948, 348),
+      new Switch(this, 192, 528, 468, 592),
+    ]);
 
     // Interactions
     this.physics.add.collider(
@@ -202,6 +204,9 @@ class Level1Scene extends Phaser.Scene {
     this.physics.add.collider(this.enemies, this.level1Platforms);
     this.physics.add.collider(this.enemies, this.enemies);
     this.physics.add.collider(this.castables, this.level1Platforms);
+    this.physics.add.overlap(this.castables, this.switches, (obj1, obj2) => {
+      if (!obj2.settings.activated) obj2.activateSwitch();
+    });
     this.physics.add.collider(this.player, this.enemies, (obj1, obj2) => {
       obj1.takeHit(8);
       obj2.takeHit(0);
