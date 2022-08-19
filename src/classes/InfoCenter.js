@@ -62,11 +62,11 @@ export default class InfoCenter extends Phaser.GameObjects.Group {
         this.settings.boxTop + 24,
         "arrow-up"
       ),
-      this.scene.add.image(
+      (this.swordIcon = this.scene.add.image(
         this.settings.boxLeft + 80,
         this.settings.boxTop + 58,
         "icon-sword"
-      ),
+      )),
       this.scene.add.image(
         this.settings.boxLeft + 134,
         this.settings.boxTop + 24,

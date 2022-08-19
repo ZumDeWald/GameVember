@@ -93,6 +93,14 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     );
     this.add(this.pUp1Box);
 
+    this.swordIcon = this.scene.add.image(
+      this.settings.boxLeft + 76,
+      this.settings.boxTop + 175,
+      "icon-sword"
+    );
+    this.swordIcon.angle = 45;
+    this.add(this.swordIcon);
+
     this.pUp1Description = this.scene.add.text(
       this.settings.boxLeft + 125,
       this.settings.boxTop + 157,
@@ -210,7 +218,7 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       "potions",
       "potion_red"
     );
-    this.healthPowerUp.setScale(2.8);
+    this.healthPowerUp.setScale(3);
     this.add(this.healthPowerUp);
 
     this.healthPowerUpTotal = this.scene.add.text(
@@ -256,6 +264,17 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     sceneEvents.on(
       EventsName.GET_CLING,
       () => {
+        this.clingIcon = this.scene.add.image(
+          this.settings.boxLeft + 75,
+          this.settings.boxTop + 260,
+          "potions",
+          "potion_purple"
+        );
+        this.clingIcon.setScale(4);
+        this.clingIcon.setVisible(false);
+        this.clingIcon.setDepth(10);
+        this.add(this.clingIcon);
+
         this.pUp2Description.text = `You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.`;
       },
       this
@@ -264,6 +283,17 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     sceneEvents.on(
       EventsName.GET_TELE,
       () => {
+        this.castIcon = this.scene.add.image(
+          this.settings.boxLeft + 75,
+          this.settings.boxTop + 345,
+          "potions",
+          "potion_white"
+        );
+        this.castIcon.setScale(4);
+        this.castIcon.setVisible(false);
+        this.castIcon.setDepth(10);
+        this.add(this.castIcon);
+
         this.pUp3Description.text = `You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.`;
       },
       this
