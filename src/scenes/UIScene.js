@@ -5,7 +5,7 @@ import { GameParams } from "../constants.js";
 import { sceneEvents } from "../events/EventsCenter.js";
 import DialogBox from "../classes/DialogBox.js";
 import PauseScreen from "../classes/PauseScreen.js";
-import InfoCenter from "../classes/InfoCenter.js";
+import OnScreenControls from "../classes/OnScreenControls.js";
 import { generateInputs } from "../utilities/inputListeners.js";
 import DimensionTraversal from "./DimensionTraversal.js";
 
@@ -83,7 +83,7 @@ class UIScene extends Scene {
     );
 
     sceneEvents.on(
-      EventsName.GET_TELE,
+      EventsName.GET_CAST,
       (i, p, c) => {
         sceneEvents.emit(EventsName.PAUSE_GAME);
         this.scene.add("traverse", DimensionTraversal, true, {
@@ -183,7 +183,7 @@ class UIScene extends Scene {
 
     this.dialog = new DialogBox(this, this.inputs);
     this.pauseScreen = new PauseScreen(this, this.inputs);
-    this.infoCenter = new InfoCenter(this, this.inputs);
+    this.OnScreenControls = new OnScreenControls(this);
   }
 
   handlePlayerHealthChange(newHealth) {

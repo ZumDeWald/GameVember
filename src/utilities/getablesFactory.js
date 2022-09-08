@@ -8,7 +8,8 @@ const getablesFactory = (
   key,
   frame = null,
   eventName,
-  floats
+  floats,
+  scale = null
 ) => {
   const getablePoints = mapRef.filterObjects(
     layer,
@@ -39,6 +40,10 @@ const getablesFactory = (
         hold: 100,
         yoyo: true,
       });
+
+      if (scale) {
+        item.setScale(scale);
+      }
     }
   });
 

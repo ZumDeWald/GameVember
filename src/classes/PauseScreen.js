@@ -1,5 +1,9 @@
-import { EventsName } from "../constants.js";
+import { EventsName, PauseScreenMenus } from "../constants.js";
 import { sceneEvents } from "../events/EventsCenter.js";
+import generateCastControls from "../utilities/generateCastControls.js";
+import generateMenuControlsGroup from "../utilities/generateMenuControlsGroup.js";
+import generateMenuInventoryGroup from "../utilities/generateMenuInventoryGroup.js";
+import generateMenuMainGroup from "../utilities/generateMenuMainGroup.js";
 
 export default class PauseScreen extends Phaser.GameObjects.Group {
   constructor(scene, inputsFromScene) {
@@ -11,231 +15,39 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       boxLeft: 25,
       inputTimeout: 0,
       paused: false,
+      currentScreen: PauseScreenMenus.CONTROLS,
       dialogOpen: false,
       healthCollected: 0,
     };
 
-    // Main box
-    this.backingBox = this.scene.add.graphics();
-    this.backingBox.fillStyle(0x000000);
-    this.backingBox.fillRoundedRect(
-      this.settings.boxLeft + 1,
-      this.settings.boxTop + 1,
-      749,
-      549,
-      8
-    );
-    this.backingBox.lineStyle(5, 0xeeeeee);
-    this.backingBox.strokeRoundedRect(
+    //Setup Groups
+    this.mainGroup = generateMenuMainGroup(
+      this.scene,
       this.settings.boxLeft,
-      this.settings.boxTop,
-      750,
-      550,
-      8
+      this.settings.boxTop
     );
-    this.add(this.backingBox);
-
-    this.header = this.scene.add.text(
-      100,
-      this.settings.boxTop + 10,
-      `--]||-  PAUSE  -||[--`,
-      {
-        fontSize: "18px",
-      }
-    );
-    this.header.setDepth(11);
-    this.add(this.header);
-    this.header.setPosition(
-      this.scene.game.scale.width / 2 - this.header.width / 2,
-      this.settings.boxTop + 40
-    );
-
-    // Abilities
-    this.abilitiesFlourish = this.scene.add.text(
+    this.inventoryGroup = generateMenuInventoryGroup(
+      this.scene,
       this.settings.boxLeft,
-      this.settings.boxTop + 90,
-      `||||||||||`,
-      {
-        fontFamily: "Times",
-        fontSize: "32px",
-      }
+      this.settings.boxTop
     );
-    this.abilitiesFlourish.setAlpha(0.5);
-    this.add(this.abilitiesFlourish);
-
-    this.abilitiesHeader = this.scene.add.text(
-      this.settings.boxLeft + 75,
-      this.settings.boxTop + 92,
-      `Abilities`,
-      {
-        fontFamily: "Arial",
-        fontSize: "24px",
-      }
-    );
-    this.add(this.abilitiesHeader);
-
-    this.pUp1Box = this.scene.add.graphics();
-    this.pUp1Box.fillStyle(0x333333);
-    this.pUp1Box.fillRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 145,
-      60,
-      60,
-      8
-    );
-    this.pUp1Box.lineStyle(2, 0x545976);
-    this.pUp1Box.strokeRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 145,
-      60,
-      60,
-      8
-    );
-    this.add(this.pUp1Box);
-
-    this.swordIcon = this.scene.add.image(
-      this.settings.boxLeft + 76,
-      this.settings.boxTop + 175,
-      "icon-sword"
-    );
-    this.swordIcon.angle = 45;
-    this.add(this.swordIcon);
-
-    this.pUp1Description = this.scene.add.text(
-      this.settings.boxLeft + 125,
-      this.settings.boxTop + 157,
-      `You're not sure why you even have this sword ...\nbut somehow it comforts you like a familiar friend.`,
-      {
-        fontSize: "16px",
-      }
-    );
-    this.add(this.pUp1Description);
-
-    this.pUp2Box = this.scene.add.graphics();
-    this.pUp2Box.fillStyle(0x333333);
-    this.pUp2Box.fillRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 230,
-      60,
-      60,
-      8
-    );
-    this.pUp2Box.lineStyle(2, 0x545976);
-    this.pUp2Box.strokeRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 230,
-      60,
-      60,
-      8
-    );
-    this.add(this.pUp2Box);
-
-    this.pUp2Description = this.scene.add.text(
-      this.settings.boxLeft + 125,
-      this.settings.boxTop + 242,
-      "",
-      {
-        fontSize: "16px",
-      }
-    );
-    this.add(this.pUp2Description);
-
-    this.pUp3Box = this.scene.add.graphics();
-    this.pUp3Box.fillStyle(0x333333);
-    this.pUp3Box.fillRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 315,
-      60,
-      60,
-      8
-    );
-    this.pUp3Box.lineStyle(2, 0x545976);
-    this.pUp3Box.strokeRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 315,
-      60,
-      60,
-      8
-    );
-    this.add(this.pUp3Box);
-
-    this.pUp3Description = this.scene.add.text(
-      this.settings.boxLeft + 125,
-      this.settings.boxTop + 320,
-      "",
-      {
-        fontSize: "16px",
-      }
-    );
-    this.add(this.pUp3Description);
-
-    // Health Powerups
-    this.healthPowerUpsHeaderFlourish = this.scene.add.text(
+    this.controlsGroup = generateMenuControlsGroup(
+      this.scene,
       this.settings.boxLeft,
-      this.settings.boxTop + 410,
-      `||||||||||`,
-      {
-        fontFamily: "Times",
-        fontSize: "32px",
-      }
+      this.settings.boxTop
     );
-    this.healthPowerUpsHeaderFlourish.setAlpha(0.5);
-    this.add(this.healthPowerUpsHeaderFlourish);
 
-    this.healthPowerUpsHeader = this.scene.add.text(
-      this.settings.boxLeft + 75,
-      this.settings.boxTop + 412,
-      `Health Viles`,
-      {
-        fontFamily: "Arial",
-        fontSize: "24px",
-      }
-    );
-    this.add(this.healthPowerUpsHeader);
-
-    this.healthPowerUpsBox = this.scene.add.graphics();
-    this.healthPowerUpsBox.fillStyle(0x333333);
-    this.healthPowerUpsBox.fillRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 456,
-      60,
-      60,
-      8
-    );
-    this.healthPowerUpsBox.lineStyle(2, 0x545976);
-    this.healthPowerUpsBox.strokeRoundedRect(
-      this.settings.boxLeft + 45,
-      this.settings.boxTop + 456,
-      60,
-      60,
-      8
-    );
-    this.add(this.healthPowerUpsBox);
-
-    this.healthPowerUp = this.scene.add.image(
-      this.settings.boxLeft + 75,
-      this.settings.boxTop + 485,
-      "potions",
-      "potion_red"
-    );
-    this.healthPowerUp.setScale(3);
-    this.add(this.healthPowerUp);
-
-    this.healthPowerUpTotal = this.scene.add.text(
-      this.settings.boxLeft + 125,
-      this.settings.boxTop + 472,
-      `0 / 5`,
-      {
-        fontFamily: "Arial",
-        fontSize: "20px",
-      }
-    );
-    this.add(this.healthPowerUpTotal);
-
-    this.setDepth(10);
     this.scene.add.existing(this);
-    this.setVisible(false);
 
+    this.mainGroup.setDepth(10);
+    this.inventoryGroup.setDepth(10);
+    this.controlsGroup.setDepth(10);
+
+    this.mainGroup.setVisible(false);
+    this.inventoryGroup.setVisible(false);
+    this.controlsGroup.setVisible(false);
+
+    // Events
     sceneEvents.on(
       EventsName.OPEN_DIALOG,
       () => {
@@ -256,7 +68,10 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
       EventsName.GET_POTION,
       () => {
         this.settings.healthCollected += 1;
-        this.healthPowerUpTotal.text = `${this.settings.healthCollected} / 5`;
+        const total = this.inventoryGroup
+          .getChildren()
+          .find((c) => c.name === "healthPowerUpTotal");
+        total.text = `${this.settings.healthCollected} / 5`;
       },
       this
     );
@@ -264,37 +79,73 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
     sceneEvents.on(
       EventsName.GET_CLING,
       () => {
-        this.clingIcon = this.scene.add.image(
+        const clingIcon = this.scene.add.image(
           this.settings.boxLeft + 75,
-          this.settings.boxTop + 260,
-          "potions",
-          "potion_purple"
+          this.settings.boxTop + 265,
+          "icon-cling"
         );
-        this.clingIcon.setScale(4);
-        this.clingIcon.setVisible(false);
-        this.clingIcon.setDepth(10);
-        this.add(this.clingIcon);
+        clingIcon.setVisible(false);
+        clingIcon.setDepth(10);
+        this.inventoryGroup.add(clingIcon);
 
-        this.pUp2Description.text = `You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.`;
+        const pUp2Description = scene.add.text(
+          this.settings.boxLeft + 125,
+          this.settings.boxTop + 252,
+          "You can cling to and jump from walls allowing even more \nversitility in traversal than you knew previously.",
+          {
+            fontSize: "16px",
+          }
+        );
+        pUp2Description.setVisible(false);
+        pUp2Description.setDepth(10);
+        this.inventoryGroup.add(pUp2Description);
+
+        const pUpBox2 = this.inventoryGroup
+          .getChildren()
+          .find((c) => c.name === "pUp2Box");
+        pUpBox2.setAlpha(1);
       },
       this
     );
 
     sceneEvents.on(
-      EventsName.GET_TELE,
+      EventsName.GET_CAST,
       () => {
-        this.castIcon = this.scene.add.image(
+        const castIcon = this.scene.add.image(
           this.settings.boxLeft + 75,
           this.settings.boxTop + 345,
-          "potions",
-          "potion_white"
+          "icon-cast"
         );
-        this.castIcon.setScale(4);
-        this.castIcon.setVisible(false);
-        this.castIcon.setDepth(10);
-        this.add(this.castIcon);
+        castIcon.setVisible(false);
+        castIcon.setDepth(10);
+        this.inventoryGroup.add(castIcon);
 
-        this.pUp3Description.text = `You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.`;
+        const pUp3Description = scene.add.text(
+          this.settings.boxLeft + 125,
+          this.settings.boxTop + 325,
+          "You are able to cast your kenetic consciousness into those\ninanimate objects open to receiving it and manipulate their\nposition.",
+          {
+            fontSize: "16px",
+          }
+        );
+        pUp3Description.setVisible(false);
+        pUp3Description.setDepth(10);
+        this.inventoryGroup.add(pUp3Description);
+
+        const pUpBox3 = this.inventoryGroup
+          .getChildren()
+          .find((c) => c.name === "pUp3Box");
+        pUpBox3.setAlpha(1);
+
+        // GenerateCastControls
+        this.controlsGroup.addMultiple(
+          generateCastControls(
+            scene,
+            this.settings.boxLeft,
+            this.settings.boxTop
+          ),
+          true
+        );
       },
       this
     );
@@ -305,23 +156,56 @@ export default class PauseScreen extends Phaser.GameObjects.Group {
 
     if (this.settings.paused) {
       this.settings.paused = false;
-      this.setVisible(false);
+      this.mainGroup.setVisible(false);
+      this.inventoryGroup.setVisible(false);
+      this.controlsGroup.setVisible(false);
       sceneEvents.emit(EventsName.RESUME_GAME);
     } else {
       this.settings.paused = true;
-      this.setVisible(true);
+      this.mainGroup.setVisible(true);
+      if (this.settings.currentScreen === PauseScreenMenus.INVENTORY) {
+        this.inventoryGroup.setVisible(true);
+      } else {
+        this.controlsGroup.setVisible(true);
+      }
       sceneEvents.emit(EventsName.PAUSE_GAME);
     }
   }
 
-  preUpdate() {
-    if (this.settings.inputTimeout === 0 && !this.settings.dialogOpen) {
-      if (this.inputs.space.isDown) this.TogglePause();
+  HandleChangeScreens() {
+    if (this.settings.currentScreen === PauseScreenMenus.CONTROLS) {
+      this.controlsGroup.setVisible(false);
+      this.inventoryGroup.setVisible(true);
+      this.settings.currentScreen = PauseScreenMenus.INVENTORY;
     } else {
+      this.inventoryGroup.setVisible(false);
+      this.controlsGroup.setVisible(true);
+      this.settings.currentScreen = PauseScreenMenus.CONTROLS;
+    }
+    this.settings.inputTimeout += 1;
+  }
+
+  preUpdate() {
+    if (this.settings.inputTimeout > 0) {
       if (this.settings.inputTimeout >= 15) {
         this.settings.inputTimeout = 0;
       } else {
         this.settings.inputTimeout += 1;
+      }
+    }
+
+    if (this.settings.inputTimeout === 0 && !this.settings.dialogOpen) {
+      if (this.inputs.space.isDown) this.TogglePause();
+    }
+
+    if (this.settings.inputTimeout === 0 && this.settings.paused) {
+      if (
+        (this.settings.currentScreen === PauseScreenMenus.INVENTORY &&
+          this.inputs.left.isDown) ||
+        (this.settings.currentScreen === PauseScreenMenus.CONTROLS &&
+          this.inputs.right.isDown)
+      ) {
+        this.HandleChangeScreens();
       }
     }
   }

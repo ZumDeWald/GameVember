@@ -121,10 +121,11 @@ class Level1Scene extends Phaser.Scene {
       this.level1Map,
       "powerUps",
       "telekenesis",
-      "potions",
-      "potion_white",
-      EventsName.GET_TELE,
-      true
+      "icon-cast",
+      null,
+      EventsName.GET_CAST,
+      true,
+      0.3
     );
 
     getablesFactory(
@@ -132,10 +133,11 @@ class Level1Scene extends Phaser.Scene {
       this.level1Map,
       "powerUps",
       "wallCling",
-      "potions",
-      "potion_purple",
+      "icon-cling",
+      null,
       EventsName.GET_CLING,
-      true
+      true,
+      0.3
     );
 
     this.castables = this.physics.add.group([
@@ -186,7 +188,7 @@ class Level1Scene extends Phaser.Scene {
 
     this.switches = this.physics.add.group([
       new Switch(this, 350, 170, 404, 156),
-      new Switch(this, 816, 264, 948, 348),
+      new Switch(this, 816, 264, 956, 348),
       new Switch(this, 192, 528, 468, 592),
     ]);
 
@@ -290,7 +292,7 @@ class Level1Scene extends Phaser.Scene {
     );
 
     sceneEvents.on(
-      EventsName.GET_TELE,
+      EventsName.GET_CAST,
       () => {
         this.time.delayedCall(300, () => {
           this.castables.getMatching(
