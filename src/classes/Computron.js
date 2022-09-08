@@ -31,7 +31,7 @@ export default class Computron extends Physics.Arcade.Image {
       texturePrefix: "computron-ded",
       dedResponse: [
         {
-          content: "...",
+          content: "[ HTTP Error : 418 ]",
           speaker: "Computron",
           endOfConvo: true,
         },

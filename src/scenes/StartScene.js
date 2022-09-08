@@ -24,6 +24,7 @@ import ArrowRight from "../assets/ArrowRight.png";
 import ArrowJump from "../assets/ArrowJump.png";
 import SwordIcon from "../assets/Sword.png";
 import CastIcon from "../assets/Cast.png";
+import ClingIcon from "../assets/Cling.png";
 import PauseIcon from "../assets/PauseIcon.png";
 import CheckBubble from "../assets/CheckBubble.png";
 import ComputronOutline from "../assets/ComputronOutline.png";
@@ -55,6 +56,7 @@ class StartScene extends Phaser.Scene {
     this.load.image("arrow-jump", ArrowJump);
     this.load.image("icon-sword", SwordIcon);
     this.load.image("icon-cast", CastIcon);
+    this.load.image("icon-cling", ClingIcon);
     this.load.image("icon-pause", PauseIcon);
     this.load.image("computron-outline", ComputronOutline);
     this.load.image("computron-ded-outline", ComputronDedOutline);

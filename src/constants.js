@@ -6,7 +6,7 @@ export const ScoreOperations = {
 
 export const EventsName = {
   GET_POTION: "GetPotion",
-  GET_TELE: "GetTelekenesis",
+  GET_CAST: "GetCast",
   GET_CLING: "GetWallCling",
   DEFEAT_BAT: "KiltBat",
   ATTACK: "Attack",
@@ -56,4 +56,19 @@ export const PlayerState = {
 export const DialogSettings = {
   PLAYER: "Player",
   COMPUTRON: "Computron",
+};
+
+export const PauseScreenMenus = {
+  INVENTORY: "Inventory",
+  CONTROLS: "Controls",
+};
+
+export const InputMappings = {
+  UP: "W",
+  DOWN: "S",
+  LEFT: "A",
+  RIGHT: "D",
+  JUMP: "K",
+  ATK: "L",
+  PAUSE: "SPACE",
 };

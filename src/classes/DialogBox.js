@@ -1,4 +1,4 @@
-import { EventsName } from "../constants.js";
+import { EventsName, InputMappings } from "../constants.js";
 import { sceneEvents } from "../events/EventsCenter.js";
 
 export default class DialogBox extends Phaser.GameObjects.Group {
@@ -95,7 +95,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
         {
           x: this.settings.boxLeft + 656,
           y: this.settings.boxTop + 112,
-          text: `L`,
+          text: `${InputMappings.ATK}`,
         },
         true
       ),

@@ -26,7 +26,7 @@ export default class Player extends CharacterBase {
     };
 
     sceneEvents.on(
-      EventsName.GET_TELE,
+      EventsName.GET_CAST,
       () => {
         this.settings.cast = true;
       },
