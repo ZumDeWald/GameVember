@@ -4,7 +4,7 @@ import StartScene from "./scenes/StartScene.js";
 import UIScene from "./scenes/UIScene.js";
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.WEBGL,
   parent: "game-canvas",
   width: 800,
   height: 600,

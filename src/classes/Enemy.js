@@ -10,6 +10,7 @@ class Enemy extends CharacterBase {
     this.target = target;
     this.AGGRESSOR_RADIUS = 100;
     this.hit = false;
+    this.setPipeline("Light2D");
 
     this.handleAttack = () => {
       const enemyLeft = this.x - this.target.x < 0 ? true : false;

@@ -21,6 +21,7 @@ const getablesFactory = (
   );
 
   items.forEach((item, index) => {
+    item.setPipeline("Light2D");
     scene.physics.add.overlap(scene.player, item, (obj1, obj2) => {
       sceneEvents.emit(eventName, index, obj1, scene.cameras.main);
       obj2.destroy();
