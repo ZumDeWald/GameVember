@@ -15,6 +15,7 @@ export default class Switch extends Phaser.GameObjects.Sprite {
     this.grate = this.scene.physics.add.image(grateX, grateY, "grate");
     this.grate.body.setAllowGravity(false);
     this.grate.setImmovable(true);
+    this.grate.setPipeline("Light2D");
 
     sceneEvents.on(
       EventsName.ATTACK,

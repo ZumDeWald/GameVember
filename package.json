@@ -1,5 +1,5 @@
 {
-  "name": "gamevember",
+  "name": "IAwokeInACave",
   "version": "1.1.1",
   "description": "A platformer game built with Phaser 3",
   "main": "src/index.js",
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/ZumDeWald/GameVember.git"
   },
-  "author": "Code Collab Team",
+  "author": "ZumDeWald",
   "license": "MIT",
   "licenseUrl": "http://www.opensource.org/licenses/mit-license.php",
   "bugs": {
@@ -34,6 +34,6 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "phaser": "^3.50.0"
+    "phaser": "^3.60.0-beta.10"
   }
 }

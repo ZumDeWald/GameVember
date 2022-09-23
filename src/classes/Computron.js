@@ -20,6 +20,7 @@ export default class Computron extends Physics.Arcade.Image {
     this.target = target;
     this.scale = 0.26;
     this.name = computronName;
+    this.setPipeline("Light2D");
 
     this.settings = {
       occupied: false,

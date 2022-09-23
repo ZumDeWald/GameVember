@@ -40,6 +40,12 @@ class Level1Scene extends Phaser.Scene {
   }
 
   create() {
+    this.lights.enable().setAmbientColor(0x222222);
+    this.light1 = this.lights
+      .addLight(100, 120, 300)
+      .setColor(0xffffff)
+      .setIntensity(1.2);
+
     this.scene.get("ui-scene").scene.restart();
 
     sceneEvents.on(
@@ -66,7 +72,7 @@ class Level1Scene extends Phaser.Scene {
     // Map
     this.level1Map = this.make.tilemap({ key: "Lair" });
     const GBs2 = this.level1Map.addTilesetImage("GBs2");
-    this.level1Map.createLayer("background", GBs2, 0, 0);
+    this.level1Map.createLayer("background", GBs2, 0, 0).setPipeline("Light2D");
     this.physics.world.setBounds(
       0,
       0,
@@ -74,16 +80,15 @@ class Level1Scene extends Phaser.Scene {
       this.level1Map.heightInPixels
     );
 
-    this.level1Platforms = this.level1Map.createLayer("platforms", GBs2, 0, 0);
+    this.level1Platforms = this.level1Map
+      .createLayer("platforms", GBs2, 0, 0)
+      .setPipeline("Light2D");
     this.level1Platforms.setCollisionByExclusion(-1, true, false);
     this.level1Platforms.setDepth(5);
 
-    this.oneWayPlatforms = this.level1Map.createLayer(
-      "oneWayPlatforms",
-      GBs2,
-      0,
-      0
-    );
+    this.oneWayPlatforms = this.level1Map
+      .createLayer("oneWayPlatforms", GBs2, 0, 0)
+      .setPipeline("Light2D");
     const oneWayTileIndecies = [1195, 1196, 1215, 1216, 1217];
     this.oneWayPlatforms.forEachTile((t) => {
       if (oneWayTileIndecies.includes(t.index)) {
@@ -91,7 +96,10 @@ class Level1Scene extends Phaser.Scene {
       }
     });
 
-    this.level1Map.createLayer("foreground", GBs2, 0, 0).setDepth(1);
+    this.level1Map
+      .createLayer("foreground", GBs2, 0, 0)
+      .setDepth(1)
+      .setPipeline("Light2D");
 
     // Anims
     createEnemyAnims(this.anims);
@@ -307,6 +315,7 @@ class Level1Scene extends Phaser.Scene {
 
   update() {
     if (!this.paused) this.player.update();
+    this.light1.setPosition(this.player.x, this.player.y);
   }
 }
 
