@@ -20,7 +20,6 @@ export default class Computron extends Physics.Arcade.Image {
     this.settings = {
       selectedCandidate: 0,
       totalCandidates: castCandidates.length - 1,
-      visible: true,
       ignoreInput: false,
     };
 
@@ -29,7 +28,6 @@ export default class Computron extends Physics.Arcade.Image {
 
     if (castCandidates.length === 0) {
       this.setVisible(false);
-      this.settings.visible = false;
     } else {
       castCandidates[this.settings.selectedCandidate].showCastable();
     }
@@ -38,8 +36,10 @@ export default class Computron extends Physics.Arcade.Image {
   }
 
   killCastSelection() {
-    if (this.settings.visible) {
-      this.castOptions[this.settings.selectedCandidate].hideCastable();
+    if (this.settings.totalCandidates > 0) {
+      this.castOptions.forEach((computron) => {
+        computron.hideCastable();
+      });
     }
     this.destroy(true);
   }
@@ -86,7 +86,7 @@ export default class Computron extends Physics.Arcade.Image {
 
   preUpdate() {
     if (this.inputs.jump.isDown) sceneEvents.emit(EventsName.CAST_END, false);
-    if (!this.settings.visible) return;
+    if (!this.visible) return;
 
     if (!this.settings.ignoreInput) {
       if (this.inputs.left.isDown) {
