@@ -75,6 +75,14 @@ export default class DialogBox extends Phaser.GameObjects.Group {
     this.text.setDepth(11);
     this.add(this.text);
 
+    const nextCircleShadow = this.scene.add.graphics();
+    nextCircleShadow.fillStyle(0x111111);
+    nextCircleShadow.fillCircle(
+      this.settings.boxLeft + 660,
+      this.settings.boxTop + 120,
+      20
+    );
+
     const nextCircle = this.scene.add.graphics();
     nextCircle.fillStyle(0x000000);
     nextCircle.fillCircle(
@@ -90,6 +98,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
     );
 
     this.next = this.scene.add.group([
+      nextCircleShadow,
       nextCircle,
       this.scene.make.text(
         {
@@ -132,7 +141,7 @@ export default class DialogBox extends Phaser.GameObjects.Group {
     this.next.setVisible(false);
 
     this.animationSequence = this.scene.time.addEvent({
-      delay: 12,
+      delay: 15,
       callback: this.animateText,
       callbackScope: this,
       loop: true,

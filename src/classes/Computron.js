@@ -75,7 +75,7 @@ export default class Computron extends Physics.Arcade.Image {
 
   setOccupied(status) {
     this.settings.occupied = status;
-    this.scene.tweens.killTweensOf(this);
+    hideCastable();
     this.body.setAllowGravity(!status);
   }
 

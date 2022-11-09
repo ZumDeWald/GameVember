@@ -262,7 +262,7 @@ class Level1Scene extends Phaser.Scene {
         );
         this.time.delayedCall(300, () => {
           this.cameras.main.startFollow(target, true);
-          this.lightTarget = target;
+          // this.lightTarget = target;
         });
         this.mini.startFollow(target, true);
       },
@@ -283,7 +283,7 @@ class Level1Scene extends Phaser.Scene {
         );
         this.time.delayedCall(300, () => {
           this.cameras.main.startFollow(this.player, true);
-          this.lightTarget = this.player;
+          // this.lightTarget = this.player;
         });
         this.mini.startFollow(this.player, true);
       },
