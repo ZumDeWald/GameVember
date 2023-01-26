@@ -16,6 +16,7 @@ class Level1Scene extends Phaser.Scene {
   constructor() {
     super("playGame");
     this.paused = false;
+    this.lightTarget = null;
   }
 
   initEnemies() {
@@ -110,6 +111,7 @@ class Level1Scene extends Phaser.Scene {
     this.player = new Player(this, 100, 158, this.inputs);
     this.player.setSize(16, 28);
     this.player.setOffset(16, 8);
+    this.lightTarget = this.player;
     this.initEnemies();
 
     // Inanimates
@@ -168,8 +170,8 @@ class Level1Scene extends Phaser.Scene {
         "c1",
         "Switch Bait"
       ),
-      new Computron(this, 572, 108, this.inputs, this.player, "c2", "Kenny"),
-      new Computron(this, 115, 468, this.inputs, this.player, "c1", "Clingy"),
+      new Computron(this, 572, 108, this.inputs, this.player, "c3", "Kenny"),
+      new Computron(this, 115, 468, this.inputs, this.player, "c2", "Clingy"),
     ]);
 
     this.castables.getMatching("name", "Firsten")[0].settings.texturePrefix =
@@ -260,6 +262,7 @@ class Level1Scene extends Phaser.Scene {
         );
         this.time.delayedCall(300, () => {
           this.cameras.main.startFollow(target, true);
+          // this.lightTarget = target;
         });
         this.mini.startFollow(target, true);
       },
@@ -280,6 +283,7 @@ class Level1Scene extends Phaser.Scene {
         );
         this.time.delayedCall(300, () => {
           this.cameras.main.startFollow(this.player, true);
+          // this.lightTarget = this.player;
         });
         this.mini.startFollow(this.player, true);
       },
@@ -315,7 +319,7 @@ class Level1Scene extends Phaser.Scene {
 
   update() {
     if (!this.paused) this.player.update();
-    this.light1.setPosition(this.player.x, this.player.y);
+    this.light1.setPosition(this.lightTarget.x, this.lightTarget.y);
   }
 }
 

@@ -91,7 +91,7 @@ export default (scene, boxLeft, boxTop) => {
   const healthPowerUpsHeader = scene.add.text(
     boxLeft + 60,
     boxTop + 413,
-    `Health Viles`,
+    `Health Vials`,
     {
       fontFamily: "Arial",
       fontSize: "18px",

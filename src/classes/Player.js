@@ -22,7 +22,7 @@ export default class Player extends CharacterBase {
       jumped: false,
       touchingWall: false,
       wallCling: false,
-      cast: false,
+      cast: true, // SET FALSE AFTER TESTING
     };
 
     sceneEvents.on(
