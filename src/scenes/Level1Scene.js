@@ -170,8 +170,8 @@ class Level1Scene extends Phaser.Scene {
         "c1",
         "Switch Bait"
       ),
-      new Computron(this, 572, 108, this.inputs, this.player, "c2", "Kenny"),
-      new Computron(this, 115, 468, this.inputs, this.player, "c1", "Clingy"),
+      new Computron(this, 572, 108, this.inputs, this.player, "c3", "Kenny"),
+      new Computron(this, 115, 468, this.inputs, this.player, "c2", "Clingy"),
     ]);
 
     this.castables.getMatching("name", "Firsten")[0].settings.texturePrefix =

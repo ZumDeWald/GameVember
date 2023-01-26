@@ -10,7 +10,7 @@ const conversations = {
     },
     {
       content:
-        "Please use other CT-1178 terminals to provide a deeper glimpse into what has been discovered through our R&D efforts.",
+        "Please use other CT-1176 terminals to provide a deeper glimpse into what has been discovered through our R&D efforts.",
       speaker: DialogSettings.COMPUTRON,
       endOfConvo: false,
     },
@@ -25,8 +25,7 @@ const conversations = {
       endOfConvo: false,
     },
     {
-      content:
-        "Maybe one of them has a map or something to help me get out of here.",
+      content: "Wonder if any of them open a door out of here.",
       speaker: DialogSettings.PLAYER,
       endOfConvo: true,
     },
@@ -50,6 +49,124 @@ const conversations = {
     },
     {
       content: "...",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "Wait, can you respond to me?",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "[ END OF DIM-1 JUMP SCRIPT ]",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "Guess that's a no.",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: true,
+    },
+  ],
+  c3: [
+    {
+      content: "Welcome! Glad you have arrived.",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "Uhm....",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "Didn't you just have a big red X on your screen?",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "Impossible. I am fully functional.",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "...",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content:
+        "Oh right, you're just running a script. You can't give me any real answers...",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "I beg your pardon?!",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content:
+        "I am more than capable of holding an intelligent conversation, thank you very much.",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content:
+        "Perhaps the Computrons in the place from which you just arrived were primitive simpletons...",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "Terribly sorry! I didn't mean to be ru...",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content:
+        "Hold on, you say 'place from which I just arrived'? What do you mean by that?",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "I've been stuck down here for what feels like days.",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content:
+        "You were here already, but not the you to whom I currently speak.",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content:
+        "There is clearly a measurable change in mental variance from when we spoke earlier.",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "As though you have just awoke from a dream...",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "Yes! I just woke up in this cave and am trying to get out!",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "Any chance you have directions for a way out of this place?",
+      speaker: DialogSettings.PLAYER,
+      endOfConvo: false,
+    },
+    {
+      content: "[ END OF DIM-2 ADVANCED CONVERSATION SCRIPT ]",
+      speaker: DialogSettings.COMPUTRON,
+      endOfConvo: false,
+    },
+    {
+      content: "WUT?!",
       speaker: DialogSettings.PLAYER,
       endOfConvo: true,
     },

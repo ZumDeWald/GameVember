@@ -54,8 +54,8 @@ export const PlayerState = {
 };
 
 export const DialogSettings = {
-  PLAYER: "Player",
-  COMPUTRON: "Computron",
+  PLAYER: "PlayerDialogPic",
+  COMPUTRON: "ComputronDialogPic",
 };
 
 export const PauseScreenMenus = {

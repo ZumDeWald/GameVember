@@ -29,6 +29,8 @@ import PauseIcon from "../assets/PauseIcon.png";
 import CheckBubble from "../assets/CheckBubble.png";
 import ComputronOutline from "../assets/ComputronOutline.png";
 import ComputronDedOutline from "../assets/ComputronDedOutline.png";
+import PlayerDialogPic from "../assets/HeroClose.png";
+import ComputronDialogPic from "../assets/CompClose.png";
 
 class StartScene extends Phaser.Scene {
   constructor() {
@@ -61,6 +63,8 @@ class StartScene extends Phaser.Scene {
     this.load.image("computron-outline", ComputronOutline);
     this.load.image("computron-ded-outline", ComputronDedOutline);
     this.load.image("check-bubble", CheckBubble);
+    this.load.image("PlayerDialogPic", PlayerDialogPic);
+    this.load.image("ComputronDialogPic", ComputronDialogPic);
   }
 
   create() {
